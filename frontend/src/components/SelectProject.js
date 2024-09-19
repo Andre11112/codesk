@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../styles/SelectProject.css';
 
 const SelectProject = () => {
     const navigate = useNavigate();

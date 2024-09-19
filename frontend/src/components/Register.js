@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import './register.css';
+import { useNavigate } from 'react-router-dom';
+import '../styles/register.css';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -8,10 +9,12 @@ const Register = () => {
     firstName: '',
     lastName: ''
   });
+  const navigate = useNavigate(); 
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -26,7 +29,7 @@ const Register = () => {
       const data = await response.json();
       console.log('Respuesta del servidor:', data);
       if (response.ok) {
-        alert('Registro exitoso');
+        navigate('/select-project'); 
       } else {
         alert(`Error en el registro: ${data.error || 'Error desconocido'}`);
       }
