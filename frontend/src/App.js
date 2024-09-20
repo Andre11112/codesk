@@ -4,19 +4,17 @@ import Home from './components/Home';
 import Register from './components/Register';
 import Login from './components/Login';
 import SelectProject from './components/SelectProject';
-import Chat from './components/Chat';
+import MobileChat from './components/MobileChat';
+import WebChat from './components/WebChat';
 import './App.css';
 
 function App() {
     const location = useLocation();
-
-    // Rutas donde no se debe mostrar el encabezado
-    const hideHeaderRoutes = ['/login', '/register', '/select-project', '/chat/:type'];
+    const hideHeaderRoutes = ['/login', '/register', '/select-project', '/chat/mobile', '/chat/web'];
 
     return (
         <div className="App">
             <div className="content-wrapper">
-                {/* Renderizar el encabezado solo si no estamos en las rutas especificadas */}
                 {!hideHeaderRoutes.includes(location.pathname) && (
                     <header>
                         <div className="logo">Codesk</div>
@@ -37,7 +35,8 @@ function App() {
                         <Route path="/register" element={<Register />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/select-project" element={<SelectProject />} />
-                        <Route path="/chat/:type" element={<Chat />} />
+                        <Route path="/chat/mobile" element={<MobileChat />} />
+                        <Route path="/chat/web" element={<WebChat />} />
                     </Routes>
                 </main>
             </div>

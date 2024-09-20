@@ -6,8 +6,11 @@ const SelectProject = () => {
     const navigate = useNavigate();
 
     const handleSelection = (type) => {
-
-        navigate(`/chat/${type}`);
+        if (type === 'mobile') {
+            navigate('/chat/mobile');
+        } else {
+            navigate('/chat/web');
+        }
     };
 
     return (
