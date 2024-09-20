@@ -9,7 +9,7 @@ const Register = () => {
     firstName: '',
     lastName: ''
   });
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -18,7 +18,6 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log('Enviando datos de registro:', formData);
       const response = await fetch('/api/auth/register', {
         method: 'POST',
         headers: {
@@ -27,19 +26,13 @@ const Register = () => {
         body: JSON.stringify(formData),
       });
       const data = await response.json();
-      console.log('Respuesta del servidor:', data);
       if (response.ok) {
-        navigate('/select-project'); 
+        navigate('/select-project');
       } else {
         alert(`Error en el registro: ${data.error || 'Error desconocido'}`);
       }
     } catch (error) {
-      console.error('Error:', error);
-      if (error instanceof TypeError && error.message === 'Failed to fetch') {
-        alert('Error de conexión. Verifica que el servidor esté funcionando y que la URL sea correcta.');
-      } else {
-        alert('Error en el registro: ' + error.message);
-      }
+      alert('Error en el registro: ' + error.message);
     }
   };
 

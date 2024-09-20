@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import '../styles/chat.css';
 
-const Chat = () => {
+const ChatPage = () => {
     const { type } = useParams();
     const [programmers, setProgrammers] = useState([]);
     const [error, setError] = useState(null);
+    const [chatVisible, setChatVisible] = useState(false);
+    const [messages, setMessages] = useState([]);
+    const [newMessage, setNewMessage] = useState('');
 
     useEffect(() => {
         const fetchProgrammers = async () => {
@@ -24,7 +28,15 @@ const Chat = () => {
     }, [type]);
 
     const startChat = (programmerId) => {
+        setChatVisible(true);
         console.log(`Iniciar chat con programador ID: ${programmerId}`);
+    };
+
+    const sendMessage = () => {
+        if (newMessage.trim()) {
+            setMessages([...messages, newMessage]);
+            setNewMessage('');
+        }
     };
 
     if (error) {
@@ -46,8 +58,26 @@ const Chat = () => {
                     ))}
                 </ul>
             )}
+            {chatVisible && (
+                <div className="chat-box">
+                    <div className="messages">
+                        {messages.map((msg, index) => (
+                            <div key={index} className="message">{msg}</div>
+                        ))}
+                    </div>
+                    <div className="input-container">
+                        <input
+                            type="text"
+                            value={newMessage}
+                            onChange={(e) => setNewMessage(e.target.value)}
+                            placeholder="Escribe un mensaje..."
+                        />
+                        <button onClick={sendMessage}>Enviar</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
 
-export default Chat;
+export default ChatPage;
