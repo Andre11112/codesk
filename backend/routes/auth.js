@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const pool = require('../db'); // Asegúrate de que esta ruta sea correcta
+const pool = require('../db'); 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -16,7 +16,7 @@ router.post('/register', async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10); 
     const result = await pool.query(
-      'INSERT INTO users (email, password_hash, first_name, last_name) VALUES ($1, $2, $3, $4) RETURNING *', // Cambiar password a password_hash
+      'INSERT INTO users (email, password_hash, first_name, last_name) VALUES ($1, $2, $3, $4) RETURNING *', 
       [email, hashedPassword, firstName, lastName] 
     );
     res.status(200).json({ message: 'Registro exitoso', user: result.rows[0] });

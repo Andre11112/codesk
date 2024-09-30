@@ -10,7 +10,7 @@ import './App.css';
 
 function App() {
     const location = useLocation();
-    const hideHeaderRoutes = ['/login', '/register', '/select-project', '/chat/mobile', '/chat/web'];
+    const hideHeaderRoutes = ['/login', '/register', '/select-project', '/chat/mobile', '/chat/web', '/'];
 
     return (
         <div className="App">

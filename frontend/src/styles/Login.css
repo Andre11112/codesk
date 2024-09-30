@@ -1,59 +1,83 @@
-.login-container {
-  max-width: 400px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.login-container h2 {
-  text-align: center;
-  color: #3498db;
-  margin-bottom: 1.5rem;
-}
-
-.login-form {
+body {
+  background-image: url('../assets/images/FrameCRUZ.png'); 
+  background-size: cover; 
+  background-position: center; 
+  height: 100vh; 
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.form-group {
-  margin-bottom: 1rem;
+.login-box {
+  background: rgba(255, 255, 255, 0.5); 
+  padding: 40px; 
+  border-radius: 10px;
+  width: 400px; 
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
 }
 
-.form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  color: #333;
-  font-weight: bold;
+.input-group {
+  margin-bottom: 15px;
+  position: relative;
 }
 
-.form-group input {
+.input-group input {
   width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.5); 
+  border-radius: 5px;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.2); 
+  color: white; 
 }
 
-.submit-button {
-  background-color: #3498db;
-  color: white;
-  padding: 0.75rem;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  font-size: 12px;
+  color: #333;
 }
 
-.submit-button:hover {
-  background-color: #2980b9;
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.5); 
+  color: black; 
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
-.error-message {
-  color: #e74c3c;
-  margin-top: 0.5rem;
-  font-size: 0.9rem;
+button:hover {
+  background-color: rgba(255, 255, 255, 0.7); 
+}
+
+.forgot-password, .register, .captcha-info {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.captcha-info {
+  font-size: 12px;
+  color: #777;
+  margin-top: 10px;
+}
+
+.captcha-info a {
+  font-size: 12px;
+  color: #007bff;
 }

@@ -45,32 +45,42 @@ function Login() {
 
   return (
     <div className="login-container">
-      <h2>Iniciar Sesión</h2>
-      <form onSubmit={handleSubmit} className="login-form">
-        <div className="form-group">
-          <label htmlFor="email">Correo electrónico:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Contraseña:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button type="submit" className="submit-button">Iniciar Sesión</button>
-      </form>
+      <div className="login-box">
+        <h2>Inicia sesión</h2>
+        <form onSubmit={handleSubmit} className="login-form">
+          <div className="input-group">
+            <input
+              type="email"
+              placeholder="Correo"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="input-group">
+            <input
+              type="password"
+              placeholder="Contraseña"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+            <span className="toggle-password">Hide</span>
+          </div>
+          <button type="submit" className="submit-button">Iniciar Sesión</button>
+          <div className="forgot-password">
+            <a href="#">¿Olvidaste tu contraseña?</a>
+          </div>
+          <div className="register">
+            <span>¿No tienes cuenta? </span><a href="/register">Regístrate aquí</a>
+          </div>
+          <div className="captcha-info">
+            <p>This page is protected by Google reCAPTCHA to ensure you're not a bot. <a href="#">Learn more</a>.</p>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
