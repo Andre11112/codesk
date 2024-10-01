@@ -1,60 +1,90 @@
+
+
 .register-container {
-    max-width: 400px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background: rgba(255, 255, 255, 0.5); /* Fondo blanco con 50% de opacidad */
-  }
-  
-  .register-container h2 {
-    text-align: center;
-    color: #3498db;
-    margin-bottom: 1.5rem;
-  }
-  
-  .register-form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .form-group {
-    margin-bottom: 1rem;
-  }
-  
-  .form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: #333;
-    font-weight: bold;
-  }
-  
-  .form-group input {
-    width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
-  }
-  
-  .submit-button {
-    background-color: rgba(255, 255, 255, 0.5); /* Fondo blanco con 50% de opacidad */
-    color: black; /* Color del texto */
-    padding: 0.75rem;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .submit-button:hover {
-    background-color: #2980b9;
-  }
-  
-  .error-message {
-    color: #e74c3c;
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-  }
+  background: rgba(255, 255, 255, 0.9); /* Fondo blanco con opacidad */
+  border-radius: 20px; /* Bordes redondeados */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Sombra */
+  padding: 40px; /* Espaciado interno */
+  width: 400px; /* Ancho del contenedor */
+  text-align: left;
+  margin: auto; /* Centrar texto */
+}
+
+h2 {
+  color: #333; /* Color del título */
+  margin-bottom: 20px; /* Espaciado inferior */
+}
+
+.form-content p {
+  color: #777; /* Color del texto secundario */
+}
+
+.form-group {
+  margin-bottom: 20px; /* Espaciado entre grupos de entrada */
+}
+
+.form-group label {
+  display: block; /* Hacer que las etiquetas ocupen toda la línea */
+  margin-bottom: 5px; /* Espaciado inferior */
+  font-size: 14px; /* Tamaño de fuente */
+  color: #333; /* Color de las etiquetas */
+}
+
+.form-group input,
+.form-group select {
+  width: 100%; /* Ancho completo */
+  padding: 10px; /* Espaciado interno */
+  border: 1px solid rgba(255, 255, 255, 0.5); /* Borde semi-transparente */
+  border-radius: 5px; /* Bordes redondeados */
+  font-size: 16px; /* Tamaño de fuente */
+  background: rgba(255, 255, 255, 0.2); /* Fondo semi-transparente */
+  color: white; /* Color del texto */
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #007bff; /* Color del borde al enfocar */
+}
+
+.recaptcha-container {
+  display: flex;
+  align-items: center; /* Alinear verticalmente */
+  margin-top: 10px; /* Espaciado superior */
+}
+
+.recaptcha-container input {
+  margin-right: 10px; /* Espaciado a la derecha */
+}
+
+button {
+  width: 100%; /* Ancho completo */
+  padding: 10px; /* Espaciado interno */
+  background-color: rgba(0, 123, 255, 0.8); /* Color de fondo del botón */
+  color: white; /* Color del texto */
+  border: none; /* Sin borde */
+  border-radius: 5px; /* Bordes redondeados */
+  font-size: 16px; /* Tamaño de fuente */
+  cursor: pointer; /* Cambiar cursor al pasar */
+  margin-top: 20px; /* Espaciado superior */
+}
+
+button:hover {
+  background-color: rgba(0, 123, 255, 1); /* Color de fondo al pasar el mouse */
+}
+
+.footer-text {
+  margin-top: 20px; /* Espaciado superior */
+  font-size: 14px; /* Tamaño de fuente */
+  color: #777; /* Color del texto */
+}
+
+/* Añadir un nuevo contenedor para los estilos específicos */
+.register-page {
+  /* Estilos específicos para la página de registro */
+  background-color: #f9f9f9; /* Color de fondo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}

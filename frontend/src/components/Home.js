@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/home.css';
 
-
-
 const Home = () => {
+  const [darkMode, setDarkMode] = useState(false);
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
+
   return (
-    <>
+    <div className={darkMode ? 'dark' : ''}>
       <header className="bg-white shadow-md sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">  
-        <img src="/logo.png" alt="Logo" className="logo-image" />
+          <img src="/logo.png" alt="Logo" className="logo-image" />
           <nav className="space-x-8 text-gray-700 font-semibold">
             <a href="#" className="hover:text-gray-900">Inicio</a>
             <a href="#" className="hover:text-gray-900">Conocenos</a>
@@ -19,6 +23,11 @@ const Home = () => {
             <a href="/login" className="text-sm">Iniciar Sesión</a>
             <a href="/register" className="text-sm">Registro</a>
             <div className="w-10 h-10 rounded-full bg-gray-300"></div>
+            {/* Botón deslizable para modo oscuro */}
+            <label className="switch">
+              <input type="checkbox" checked={darkMode} onChange={toggleDarkMode} />
+              <span className="slider round"></span>
+            </label>
           </div>
         </div>
       </header>
@@ -106,7 +115,7 @@ const Home = () => {
           </div>
         </div>
       </footer>
-    </>
+    </div>
   );
 };
 
