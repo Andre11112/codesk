@@ -10,17 +10,17 @@ const Home = () => {
 
   return (
     <div className={darkMode ? 'dark' : ''}>
-      <header className="bg-white shadow-md sticky top-0 z-10">
+      <header className="bg-white shadow-md sticky top-0 z-10 w-3/4 rounded-3xl mx-auto">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">  
-          <img src="/logo.png" alt="Logo" className="logo-image" />
-          <nav className="space-x-8 text-gray-700 font-semibold">
-            <a href="#" className="hover:text-gray-900">Inicio</a>
+          <img src="/1.png" className="logo-image" />
+          <nav className="space-x-8 text-black font-semibold ">
+            <a href="#" className="hover:text-gray-900 ">Inicio</a>
             <a href="#" className="hover:text-gray-900">Conocenos</a>
             <a href="#" className="hover:text-gray-900">Trabajos</a>
-            <a href="#" className="hover:text-gray-900">Contactanos</a>
+            <a href="MobileChat.js" className="hover:text-gray-900">Contactanos</a>
           </nav>
           <div className="flex items-center space-x-4">
-            <a href="/login" className="text-sm">Iniciar Sesión</a>
+            <a href="/login" className="botonInicioSesion">Iniciar Sesión</a>
             <a href="/register" className="text-sm">Registro</a>
             <div className="w-10 h-10 rounded-full bg-gray-300"></div>
             {/* Botón deslizable para modo oscuro */}
@@ -32,10 +32,10 @@ const Home = () => {
         </div>
       </header>
 
-      <section className="hero-bg py-20 text-center">
+      <section className="hero-bg py-20 flex items-center justify-center h-screen text-center">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-5xl font-bold mb-6">Crea tus experiencias con nosotros</h1>
-          <button className="bg-black text-white py-3 px-6 rounded-lg font-semibold hover:bg-gray-800">Contáctanos</button>
+          <h1 className="text-8xl font-bold mb-6">Crea tus experiencias con nosotros</h1>
+          <button className="bg-black text-white py-3 px-6 rounded-lg font-semibold hover:bg-gray-800 w-2/5">Contáctanos</button>
         </div>
       </section>
 
