@@ -1,6 +1,17 @@
 body {
+  position: relative;
   font-family: 'Roboto', sans-serif;
-  background-color: #f3f4f6;
+  background-color: #f5f8ff;
+  overflow: scroll;
+}
+
+.background {
+  position: absolute;
+  width: 800px;
+  height: 800px;
+  background-image: url(../assets/images/30.png);
+  top: 50%;
+  left: 50%;
 }
 
 .faq-item {
@@ -17,12 +28,37 @@ body {
 }
 
 .hero-bg {
-  background: linear-gradient(180deg, rgba(254,255,255,1) 0%, rgba(255,255,255,1) 100%);
+  background: 
+    url('../assets/images/30.png') center center no-repeat, 
+    linear-gradient( rgba(245, 248, 255, 1) 0%, rgba(245, 2488, 255, 1) 100%); 
+    background-size: 868.557px 882.805px;
+    background-attachment: fixed; 
+    position: relative; 
+    height: 100vh; 
 }
 
 .logo-image {
-  height: 50px; 
-  width: auto; 
+  border: none;
+  width: 50px;
+  height: 58px;
+  flex-shrink: 0;
+  background-image: url(../assets/images/1.png);
+  background-size: 100% 100%;
+}
+
+.botonInicioSesion {
+  position: relative;
+  width: 132px;
+  height: 48px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgb(255, 8, 68) 0%, rgb(255, 177, 153) 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  font-family: 'Roboto', sans-serif;
 }
 
 .home-page {
