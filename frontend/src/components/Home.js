@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/home.css';
 
+
 const Home = () => {
   const [darkMode, setDarkMode] = useState(false);
 
@@ -12,7 +13,7 @@ const Home = () => {
     <div className={darkMode ? 'dark' : ''}>
       <header className="bg-white shadow-md sticky top-0 z-10 w-3/4 rounded-3xl mx-auto">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">  
-          <img src="/1.png" className="logo-image" />
+          <img src="../assets/images/1.png" className="logo-image" />
           <nav className="space-x-8 text-black font-semibold ">
             <a href="#" className="hover:text-gray-900 ">Inicio</a>
             <a href="#" className="hover:text-gray-900">Conocenos</a>
@@ -23,7 +24,6 @@ const Home = () => {
             <a href="/login" className="botonInicioSesion">Iniciar Sesión</a>
             <a href="/register" className="text-sm">Registro</a>
             <div className="w-10 h-10 rounded-full bg-gray-300"></div>
-            {/* Botón deslizable para modo oscuro */}
             <label className="switch">
               <input type="checkbox" checked={darkMode} onChange={toggleDarkMode} />
               <span className="slider round"></span>
@@ -39,37 +39,66 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="py-16">
-        <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-8">Que hacemos</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <h3 className="text-xl font-semibold mb-4">Diseño Web</h3>
+      <section class="py-16 services-section">
+        <div class="container text-center">
+          <h2 class="title">Que hacemos</h2>
+          <div class="services-grid">
+
+
+            <div class="service-item">
+              <div class="icon">
+                <img src="../assets/images/3.png" alt="Icon" />
+              </div>
+              <h3>Diseño Web</h3>
               <p>Desde el concepto hasta el lanzamiento, creamos sitios web impresionantes y centrados en el usuario que elevan su marca y atraen a su audiencia.</p>
             </div>
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <h3 className="text-xl font-semibold mb-4">Diseño UI/UX</h3>
+
+            <div class="service-item">
+              <div class="icon">
+                <img src="../assets/images/4.png" alt="Icon" />
+              </div>
+              <h3>Diseño UI/UX</h3>
               <p>Diseñamos experiencias de usuario fluidas y atractivas que mejoran la interacción, con el objetivo de cultivar a tus clientes y fortalecer tu marca.</p>
             </div>
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <h3 className="text-xl font-semibold mb-4">Diseño responsivo</h3>
+            <div class="service-item">
+              <div class="icon">
+              
+                <img src="../assets/images/5.png" alt="Icon" />
+              </div>
+              <h3>Diseño responsivo</h3>
               <p>Aseguramos que tu sitio web sea completamente adaptable a cualquier dispositivo, proporcionando una experiencia de usuario óptima.</p>
             </div>
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <h3 className="text-xl font-semibold mb-4">JavaScript</h3>
+
+            <div class="service-item">
+              <div class="icon">
+                <img src="../assets/images/7.png" alt="Icon"/>
+              </div>
+              <h3>JavaScript</h3>
               <p>Utilizamos JavaScript para desarrollar sitios web modernos y flexibles, con un diseño impactante que refleja la identidad de tu marca.</p>
+              <img src="../assets/images/8.png" alt="JavaScript Icono" />
             </div>
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <h3 className="text-xl font-semibold mb-4">HTML-5</h3>
+
+            <div class="service-item">
+              <div class="icon">
+                <img src="../assets/images/6.png" alt="HTML5 Icon" />
+              </div>
+              <h3>HTML-5</h3>
               <p>Utilizamos HTML para estructurar sitios web modernos y flexibles, con una disposición clara que refleja tu marca.</p>
+              <img src="../assets/images/8.png" alt="Html5 Icono" /> 
             </div>
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <h3 className="text-xl font-semibold mb-4">Desarrollo adaptado</h3>
+
+            <div class="service-item">
+              <div class="icon">
+                <img src="../assets/images/9.png" alt="Icon" />
+              </div>
+              <h3>Desarrollo adaptado</h3>
               <p>Ofrecemos soluciones de desarrollo personalizadas para crear funcionalidades únicas que se ajusten a las necesidades del medio.</p>
             </div>
+
           </div>
         </div>
       </section>
+
 
       <section className="py-16 bg-gray-100">
         <div className="max-w-6xl mx-auto">

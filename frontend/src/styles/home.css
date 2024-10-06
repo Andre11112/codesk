@@ -30,7 +30,7 @@ body {
 .hero-bg {
   background: 
     url('../assets/images/30.png') center center no-repeat, 
-    linear-gradient( rgba(245, 248, 255, 1) 0%, rgba(245, 2488, 255, 1) 100%); 
+    linear-gradient( rgba(245, 248, 255, 1) 100%, rgba(245, 2488, 255, 1) 100%); 
     background-size: 868.557px 882.805px;
     background-attachment: fixed; 
     position: relative; 
@@ -64,4 +64,67 @@ body {
 .home-page {
   font-family: 'Roboto', sans-serif;
   background-color: #f3f4f6;
+}
+
+
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.py-16 {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.title {
+  font-size: 3.5rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.service-item {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.service-item:hover {
+  transform: translateY(-5px);
+}
+
+¿
+.icon {
+  margin-bottom: 1.5rem;
+}
+
+.icon img {
+  max-width: 64px;
+  height: auto;
+}
+
+.service-item h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.service-item p {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.5;
 }
