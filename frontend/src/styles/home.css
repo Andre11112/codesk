@@ -14,6 +14,22 @@ body {
   left: 50%;
 }
 
+nav a{
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  color:black;
+}
+
+.registro {
+  color: black; /* Cambia este valor por el color que desees */
+  text-decoration: none; /* Opcional: Remueve el subrayado */
+}
+
+.registro:hover {
+  color: black; /* Color al pasar el cursor por encima, opcional */
+}
+
 .faq-item {
   cursor: pointer;
 }
@@ -68,8 +84,9 @@ body {
 
 
 
+
 .container {
-  max-width: 1200px;
+  max-width: 1600px;
   margin: 0 auto;
   padding: 0 20px;
 }
@@ -91,40 +108,111 @@ body {
 
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
 }
 
 .service-item {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   background-color: white;
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out;
+  min-width: 350px;
+}
+
+.service-item-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; 
+}
+
+.service-item img {
+  max-width: 70px;
+  height: auto;
+}
+
+.service-item img.service-icon {
+  max-width: 100%;
+  height: auto;
+  margin-left: 20px; 
 }
 
 .service-item:hover {
   transform: translateY(-5px);
 }
 
-¿
 .icon {
   margin-bottom: 1.5rem;
 }
 
-.icon img {
-  max-width: 64px;
-  height: auto;
-}
-
 .service-item h3 {
   font-size: 1.5rem;
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 1rem;
+  text-align: left; 
 }
 
 .service-item p {
   font-size: 1rem;
   color: #555;
   line-height: 1.5;
+  text-align: justify;
 }
+
+.service-html5 {
+  grid-column: 4;
+  grid-row: span 2;
+  flex-grow: 1; 
+  display: flex;
+  flex-direction: column; 
+  align-items: flex-start; 
+}
+
+.service-html5 .service-item-content {
+  flex-direction: column; 
+  align-items: flex-start; 
+}
+
+.service-html5 img {
+  margin-top: 30px; 
+  max-width: 300px; 
+  height: auto;
+  align-self: center;
+}
+
+.service-item-content.javascript {
+  flex-direction: row; 
+}
+.service-item.javascript {
+  grid-column: span 2;
+}
+
+.service-item-content.javascript {
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+}
+
+.service-item-content.javascript img {
+  max-width: 300px; 
+  height: auto; 
+  margin-left: 20px; 
+}
+
+.service-item.javascript h3,
+.service-item.javascript p {
+  margin: 0; 
+  padding-right: 20px; 
+}
+
+.text-content {
+  flex: 1; 
+  text-align: left; 
+}
+
+
