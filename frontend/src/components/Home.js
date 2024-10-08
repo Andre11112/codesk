@@ -112,42 +112,52 @@ const Home = () => {
 
 
 
-      <section className="py-16 bg-gray-100">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold mb-8 text-center">Preguntas frecuentes</h2>
-          <div className="space-y-4">
-            <div className="faq-item bg-white rounded-lg p-6 shadow-md">
-              <h3 className="text-xl font-semibold">¿Cuánto cuesta desarrollar una página web?</h3>
-              <div className="faq-answer mt-2">El costo varía según el tamaño y las características del sitio web.</div>
+    <section class="py-16 bg-#f5f8ff">
+        <div class="max-w-6xl mx-auto">
+            <div class="faq-section-container"> 
+                <div class="faq-grid">
+                    <div class="col-span-2 md:col-span-1 flex justify-end">
+                        <h2 class="text-4xl font-bold mb-8 faq-title">Preguntas frecuentes</h2>
+                    </div>
+                    <div class="col-span-2 md:col-span-1 space-y-4">
+                        <div class="faq-item bg-white rounded-lg p-6 shadow-md">
+                            <h3 class="text-xl font-semibold">¿Cuánto cuesta desarrollar una página web?</h3>
+                            <div class="faq-answer hidden">El costo varía según el tamaño y las características del sitio web.</div>
+                        </div>
+                        <div class="faq-item bg-white rounded-lg p-6 shadow-md">
+                            <h3 class="text-xl font-semibold">¿Qué incluye el mantenimiento de la página web?</h3>
+                            <div class="faq-answer hidden">Incluye actualizaciones de seguridad, ajustes de contenido y soporte técnico.</div>
+                        </div>
+                        <div class="faq-item bg-white rounded-lg p-6 shadow-md">
+                            <h3 class="text-xl font-semibold">¿Cómo puedo solicitar una cotización para un proyecto?</h3>
+                            <div class="faq-answer hidden">Puedes contactarnos a través del formulario en la página de contacto.</div>
+                        </div>
+                        <div class="faq-item bg-white rounded-lg p-6 shadow-md">
+                            <h3 class="text-xl font-semibold">¿Ofrecen servicios de diseño gráfico?</h3>
+                            <div class="faq-answer hidden">Sí, ofrecemos servicios de diseño gráfico como parte de nuestros paquetes.</div>
+                        </div>
+                        <div class="faq-item bg-white rounded-lg p-6 shadow-md">
+                            <h3 class="text-xl font-semibold">¿Cuáles son los plazos habituales para completar un proyecto?</h3>
+                            <div class="faq-answer hidden">Dependiendo del alcance del proyecto, los plazos pueden variar entre 4 a 12 semanas.</div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div className="faq-item bg-white rounded-lg p-6 shadow-md">
-              <h3 className="text-xl font-semibold">¿Qué incluye el mantenimiento de la página web?</h3>
-              <div className="faq-answer mt-2">Incluye actualizaciones de seguridad, ajustes de contenido y soporte técnico.</div>
-            </div>
-            <div className="faq-item bg-white rounded-lg p-6 shadow-md">
-              <h3 className="text-xl font-semibold">¿Cómo puedo solicitar una cotización para un proyecto?</h3>
-              <div className="faq-answer mt-2">Puedes contactarnos a través del formulario en la página de contacto.</div>
-            </div>
-            <div className="faq-item bg-white rounded-lg p-6 shadow-md">
-              <h3 className="text-xl font-semibold">¿Ofrecen servicios de diseño gráfico?</h3>
-              <div className="faq-answer mt-2">Sí, ofrecemos servicios de diseño gráfico como parte de nuestros paquetes.</div>
-            </div>
-            <div className="faq-item bg-white rounded-lg p-6 shadow-md">
-              <h3 className="text-xl font-semibold">¿Cuáles son los plazos habituales para completar un proyecto?</h3>
-              <div className="faq-answer mt-2">Dependiendo del alcance del proyecto, los plazos pueden variar entre 4 a 12 semanas.</div>
-            </div>
-          </div>
         </div>
-      </section>
+    </section>
 
+
+
+
+    <div className="mt-16 bg-#f5f8ff"> 
       <footer className="py-16 bg-gradient-to-r from-orange-400 to-purple-500 text-white">
         <div className="max-w-6xl mx-auto text-center">
           <p className="mb-6">¿Listo para elevar su presencia en línea? Contáctenos hoy para discutir su proyecto.</p>
           <div className="space-x-6">
             <a href="#" className="hover:underline">Inicio</a>
-            <a href="#" className="hover:underline">Conocenos</a>
+            <a href="#" className="hover:underline">Conócenos</a>
             <a href="#" className="hover:underline">Trabajos</a>
-            <a href="#" className="hover:underline">Contactanos</a>
+            <a href="#" className="hover:underline">Contáctanos</a>
           </div>
           <div className="flex justify-center mt-6 space-x-4">
             <a href="#" className="w-6 h-6 bg-gray-700 rounded-full"></a>
@@ -156,6 +166,7 @@ const Home = () => {
           </div>
         </div>
       </footer>
+    </div>
     </div>
   );
 };

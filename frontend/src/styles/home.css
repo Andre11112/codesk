@@ -22,12 +22,12 @@ nav a{
 }
 
 .registro {
-  color: black; /* Cambia este valor por el color que desees */
-  text-decoration: none; /* Opcional: Remueve el subrayado */
+  color: black; 
+  text-decoration: none; 
 }
 
 .registro:hover {
-  color: black; /* Color al pasar el cursor por encima, opcional */
+  color: black; 
 }
 
 .faq-item {
@@ -216,3 +216,41 @@ nav a{
 }
 
 
+
+
+.faq-section-container {
+  transform: scale(1.2); 
+  transform-origin: top; 
+  width: 100%; 
+  max-width: 1600px; 
+  padding: 40px; 
+  margin: 20px auto;
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.faq-title {
+  text-align: right;
+}
+
+.faq-answer {
+  display: none;
+  max-height: 0; 
+  overflow: hidden; 
+  transition: max-height 0.3s ease, margin-top 0.3s ease; 
+  margin-top: 10px;
+}
+
+.faq-item:hover .faq-answer {
+  display: block;
+  margin-top: 0.5rem;
+  max-height: 100px;
+}
+
+.faq-item {
+  max-width: 100%;
+}
