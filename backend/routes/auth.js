@@ -72,6 +72,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 // Ruta de registro para programadores
 router.post('/register/programmer', async (req, res) => {
   const { email, password, firstName, lastName, programmerCode } = req.body;
@@ -146,4 +147,6 @@ router.post('/login/programmer', async (req, res) => {
 
 
 
+=======
+>>>>>>> 26336ac1e21d82450da4503f33b06898e27ba320
 module.exports = router;

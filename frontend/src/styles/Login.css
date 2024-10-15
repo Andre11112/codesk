@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .login-container {
   display: flex;
   justify-content: center;
@@ -35,15 +36,31 @@
 .user-type-toggle button.active {
   background-color: #007bff;
   color: white;
+=======
+.login-box {
+  background-image: url('../assets/images/33.png');
+  background: rgba(255, 255, 255, 0.3); 
+  padding: 40px; 
+  border-radius: 10px;
+  width: 400px; 
+  text-align: left;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+  margin: auto; 
+>>>>>>> 26336ac1e21d82450da4503f33b06898e27ba320
 }
 
 .input-group {
   margin-bottom: 15px;
+<<<<<<< HEAD
+=======
+  position: relative;
+>>>>>>> 26336ac1e21d82450da4503f33b06898e27ba320
 }
 
 .input-group input {
   width: 100%;
   padding: 10px;
+<<<<<<< HEAD
   border: 1px solid #ddd;
   border-radius: 5px;
   font-size: 16px;
@@ -56,12 +73,37 @@
   padding: 10px;
   background-color: #007bff;
   color: white;
+=======
+  border: 1px solid rgba(255, 255, 255, 0.5); 
+  border-radius: 5px;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.2); 
+  color: white; 
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 12px;
+  color: #333;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.5); 
+  color: black; 
+>>>>>>> 26336ac1e21d82450da4503f33b06898e27ba320
   border: none;
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
 }
 
+<<<<<<< HEAD
 .submit-button:hover {
   background-color: #0056b3;
 }
@@ -70,6 +112,15 @@
   margin-top: 15px;
   font-size: 14px;
   color: #333;
+=======
+button:hover {
+  background-color: rgba(255, 255, 255, 0.7); 
+}
+
+.forgot-password, .register, .captcha-info {
+  margin-top: 15px;
+  font-size: 14px;
+>>>>>>> 26336ac1e21d82450da4503f33b06898e27ba320
 }
 
 a {
@@ -92,6 +143,7 @@ a:hover {
   color: #007bff;
 }
 
+<<<<<<< HEAD
 .login-page {
   background-size: 20%; 
   background-position: left top; 
@@ -105,4 +157,16 @@ a:hover {
 h2 {
   color: #333;
   margin-bottom: 20px;
+=======
+
+.login-page {
+  
+  background-size: 20%; 
+  background-position: left top; 
+  background-repeat: no-repeat; 
+  height: 900vh; 
+  display: flex;
+  justify-content: center; /* Centrar horizontalmente */
+  align-items: center; /* Centrar verticalmente */
+>>>>>>> 26336ac1e21d82450da4503f33b06898e27ba320
 }

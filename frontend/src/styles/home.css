@@ -1,0 +1,256 @@
+body {
+  position: relative;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f5f8ff;
+  overflow: scroll;
+}
+
+.background {
+  position: absolute;
+  width: 800px;
+  height: 800px;
+  background-image: url(../assets/images/30.png);
+  top: 50%;
+  left: 50%;
+}
+
+nav a{
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  color:black;
+}
+
+.registro {
+  color: black; 
+  text-decoration: none; 
+}
+
+.registro:hover {
+  color: black; 
+}
+
+.faq-item {
+  cursor: pointer;
+}
+
+.faq-item.active .faq-answer {
+  display: block;
+}
+
+.faq-answer {
+  display: none;
+  padding-top: 0.5rem;
+}
+
+.hero-bg {
+  background: 
+    url('../assets/images/30.png') center center no-repeat, 
+    linear-gradient( rgba(245, 248, 255, 1) 100%, rgba(245, 2488, 255, 1) 100%); 
+    background-size: 868.557px 882.805px;
+    background-attachment: fixed; 
+    position: relative; 
+    height: 100vh; 
+}
+
+.logo-image {
+  border: none;
+  width: 50px;
+  height: 58px;
+  flex-shrink: 0;
+  background-image: url(../assets/images/1.png);
+  background-size: 100% 100%;
+}
+
+.botonInicioSesion {
+  position: relative;
+  width: 132px;
+  height: 48px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgb(255, 8, 68) 0%, rgb(255, 177, 153) 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.home-page {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f3f4f6;
+}
+
+
+
+
+.container {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.py-16 {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.title {
+  font-size: 3.5rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.service-item {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  min-width: 350px;
+}
+
+.service-item-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; 
+}
+
+.service-item img {
+  max-width: 70px;
+  height: auto;
+}
+
+.service-item img.service-icon {
+  max-width: 100%;
+  height: auto;
+  margin-left: 20px; 
+}
+
+.service-item:hover {
+  transform: translateY(-5px);
+}
+
+.icon {
+  margin-bottom: 1.5rem;
+}
+
+.service-item h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-align: left; 
+}
+
+.service-item p {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.5;
+  text-align: justify;
+}
+
+.service-html5 {
+  grid-column: 4;
+  grid-row: span 2;
+  flex-grow: 1; 
+  display: flex;
+  flex-direction: column; 
+  align-items: flex-start; 
+}
+
+.service-html5 .service-item-content {
+  flex-direction: column; 
+  align-items: flex-start; 
+}
+
+.service-html5 img {
+  margin-top: 30px; 
+  max-width: 300px; 
+  height: auto;
+  align-self: center;
+}
+
+.service-item-content.javascript {
+  flex-direction: row; 
+}
+.service-item.javascript {
+  grid-column: span 2;
+}
+
+.service-item-content.javascript {
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+}
+
+.service-item-content.javascript img {
+  max-width: 300px; 
+  height: auto; 
+  margin-left: 20px; 
+}
+
+.service-item.javascript h3,
+.service-item.javascript p {
+  margin: 0; 
+  padding-right: 20px; 
+}
+
+.text-content {
+  flex: 1; 
+  text-align: left; 
+}
+
+
+
+
+.faq-section-container {
+  transform: scale(1.2); 
+  transform-origin: top; 
+  width: 100%; 
+  max-width: 1600px; 
+  padding: 40px; 
+  margin: 20px auto;
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.faq-title {
+  text-align: right;
+}
+
+.faq-answer {
+  display: none;
+  max-height: 0; 
+  overflow: hidden; 
+  transition: max-height 0.3s ease, margin-top 0.3s ease; 
+  margin-top: 10px;
+}
+
+.faq-item:hover .faq-answer {
+  display: block;
+  margin-top: 0.5rem;
+  max-height: 100px;
+}
+
+.faq-item {
+  max-width: 100%;
+}
