@@ -1,5 +1,5 @@
 {
-  "name": "tu-proyecto",
+  "name": "backend",
   "version": "1.0.0",
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run client\"",
@@ -8,10 +8,7 @@
     "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install"
   },
   "devDependencies": {
-<<<<<<< HEAD
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-=======
->>>>>>> 26336ac1e21d82450da4503f33b06898e27ba320
     "concurrently": "^6.2.0"
   },
   "dependencies": {

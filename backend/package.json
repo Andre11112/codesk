@@ -2,10 +2,6 @@
   "name": "backend",
   "version": "1.0.0",
   "main": "index.js",
-<<<<<<< HEAD
-=======
-  "proxy": "http://localhost:3000",
->>>>>>> 26336ac1e21d82450da4503f33b06898e27ba320
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
