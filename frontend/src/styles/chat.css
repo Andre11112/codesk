@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -58,87 +57,11 @@ body {
 
 .conversation-list {
     overflow-y: auto;
-=======
-body, html {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    height: 100%;
-}
-
-.app-container {
-    display: flex;
-    height: 100vh;
-}
-
-.sidebar {
-    width: 60px;
-    background-color: #1a1a1a;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px 0;
-}
-
-.sidebar-nav ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-.sidebar-nav li {
-    margin-bottom: 20px;
-}
-
-.sidebar-nav a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 20px;
-}
-
-.main-content {
-    display: flex;
-    flex-grow: 1;
-    background-color: #f5f5f5;
-}
-
-.conversations-list {
-    width: 300px;
-    background-color: #fff;
-    border-right: 1px solid #e0e0e0;
-}
-
-.list-header {
-    padding: 20px;
-    border-bottom: 1px solid #e0e0e0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.search-bar {
-    padding: 10px 20px;
-}
-
-.search-bar input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #e0e0e0;
-    border-radius: 5px;
-}
-
-.conversation-items {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
->>>>>>> 26336ac1e21d82450da4503f33b06898e27ba320
 }
 
 .conversation-item {
     display: flex;
     align-items: center;
-<<<<<<< HEAD
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 5px;
@@ -147,37 +70,24 @@ body, html {
 
 .conversation-item:hover, .conversation-item.active {
     background-color: #f5f5f5;
-=======
-    padding: 15px 20px;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-.conversation-item.active {
-    background-color: #f0f0f0;
->>>>>>> 26336ac1e21d82450da4503f33b06898e27ba320
 }
 
 .avatar {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-<<<<<<< HEAD
     margin-right: 10px;
 }
 
 .avatar.small {
     width: 30px;
     height: 30px;
-=======
-    margin-right: 15px;
->>>>>>> 26336ac1e21d82450da4503f33b06898e27ba320
 }
 
 .conversation-info {
     flex-grow: 1;
 }
 
-<<<<<<< HEAD
 .time {
     font-size: 0.8em;
     color: #888;
@@ -196,31 +106,11 @@ body, html {
 }
 
 .main-chat {
-=======
-.conversation-info h3 {
-    margin: 0;
-    font-size: 16px;
-}
-
-.conversation-info p {
-    margin: 5px 0 0;
-    font-size: 14px;
-    color: #666;
-}
-
-.time {
-    font-size: 12px;
-    color: #999;
-}
-
-.conversation-view {
->>>>>>> 26336ac1e21d82450da4503f33b06898e27ba320
     flex-grow: 1;
     display: flex;
     flex-direction: column;
 }
 
-<<<<<<< HEAD
 .chat-header {
     padding: 20px;
     border-bottom: 1px solid #e0e0e0;
@@ -230,22 +120,10 @@ body, html {
 }
 
 .chat-actions {
-=======
-.conversation-header {
-    padding: 20px;
-    border-bottom: 1px solid #e0e0e0;
     display: flex;
     align-items: center;
 }
 
-.user-status {
-    margin-left: 20px;
->>>>>>> 26336ac1e21d82450da4503f33b06898e27ba320
-    display: flex;
-    align-items: center;
-}
-
-<<<<<<< HEAD
 .status-badge {
     padding: 5px 10px;
     border-radius: 15px;
@@ -277,35 +155,6 @@ body, html {
     text-align: center;
     color: #888;
     margin: 20px 0;
-=======
-.status-indicator {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    margin-right: 5px;
-}
-
-.status-indicator.online {
-    background-color: #4caf50;
-}
-
-.conversation-actions {
-    margin-left: auto;
-}
-
-.conversation-actions button {
-    background: none;
-    border: none;
-    font-size: 20px;
-    margin-left: 15px;
-    cursor: pointer;
-}
-
-.messages {
-    flex-grow: 1;
-    padding: 20px;
-    overflow-y: auto;
->>>>>>> 26336ac1e21d82450da4503f33b06898e27ba320
 }
 
 .message {
@@ -313,7 +162,6 @@ body, html {
     margin-bottom: 20px;
 }
 
-<<<<<<< HEAD
 .message.customer {
     flex-direction: row;
 }
@@ -351,22 +199,6 @@ body, html {
 }
 
 .chat-input input {
-=======
-.message-content {
-    background-color: #e0e0e0;
-    padding: 10px 15px;
-    border-radius: 20px;
-    max-width: 70%;
-}
-
-.message-input {
-    padding: 20px;
-    border-top: 1px solid #e0e0e0;
-    display: flex;
-}
-
-.message-input input {
->>>>>>> 26336ac1e21d82450da4503f33b06898e27ba320
     flex-grow: 1;
     padding: 10px;
     border: 1px solid #e0e0e0;
@@ -374,7 +206,6 @@ body, html {
     margin-right: 10px;
 }
 
-<<<<<<< HEAD
 .input-actions {
     display: flex;
 }
@@ -390,72 +221,4 @@ body, html {
 
 .action-btn:hover {
     color: #007bff;
-=======
-.message-input button {
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-}
-
-.details-panel {
-    width: 300px;
-    background-color: #fff;
-    border-left: 1px solid #e0e0e0;
-    padding: 20px;
-}
-
-.panel-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.close-panel {
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-.contact-info, .company-info {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.large-avatar {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    margin-bottom: 10px;
-}
-
-.action-button {
-    background-color: #4caf50;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-.company-logo {
-    width: 60px;
-    height: 60px;
-    margin-bottom: 10px;
-}
-
-.view-profile {
-    color: #2196f3;
-    text-decoration: none;
-}
-/* Añadir un nuevo contenedor para los estilos específicos */
-.chat-page {
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
->>>>>>> 26336ac1e21d82450da4503f33b06898e27ba320
 }
