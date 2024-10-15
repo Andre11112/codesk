@@ -9,6 +9,12 @@ import imagen7 from'../assets/images/7.png';
 import imagen8 from'../assets/images/8.png';
 import imagen9 from'../assets/images/9.png';
 import imagen10 from'../assets/images/10.png';
+import imagen12 from'../assets/images/12.png';
+import imagen14 from'../assets/images/14.png';
+import imagen15 from'../assets/images/15.png';
+import imagen16 from'../assets/images/16.png';
+import imagen17 from'../assets/images/17.png';
+
 
 
 const Home = () => {
@@ -149,25 +155,29 @@ const Home = () => {
 
 
 
-    <div className="mt-16 bg-#f5f8ff"> 
-      <footer className="py-16 bg-gradient-to-r from-orange-400 to-purple-500 text-white">
-        <div className="max-w-6xl mx-auto text-center">
-          <p className="mb-6">¿Listo para elevar su presencia en línea? Contáctenos hoy para discutir su proyecto.</p>
-          <div className="space-x-6">
-            <a href="#" className="hover:underline">Inicio</a>
-            <a href="#" className="hover:underline">Conócenos</a>
-            <a href="#" className="hover:underline">Trabajos</a>
-            <a href="#" className="hover:underline">Contáctanos</a>
-          </div>
-          <div className="flex justify-center mt-6 space-x-4">
-            <a href="#" className="w-6 h-6 bg-gray-700 rounded-full"></a>
-            <a href="#" className="w-6 h-6 bg-gray-700 rounded-full"></a>
-            <a href="#" className="w-6 h-6 bg-gray-700 rounded-full"></a>
-          </div>
+      <div className="mt-16 bg-#f5f8ff"> 
+            <footer class="w-[65%] bg-white shadow-md sticky top-0 z-10 rounded-3xl mx-auto">
+              <div class="max-w-6xl mx-auto text-left coesk-footer-content">
+                  <div class="coesk-logo-section">
+                      <img src={imagen12} alt="Logo" class="coesk-logo-img"/>
+                      <p class="coesk-footer-description">¿Listo para elevar su presencia en línea? Contáctenos hoy para discutir su proyecto y descubrir cómo podemos hacer realidad su visión.</p>
+                  </div>
+                    <div class="coesk-menu-section">
+                        <a href="#" class="hover:underline">Inicio</a>
+                        <a href="#" class="hover:underline">Conócenos</a>
+                        <a href="#" class="hover:underline">Trabajos</a>
+                        <a href="#" class="hover:underline">Contáctanos</a>
+                    </div>
+                  <div class="coesk-social-section">
+                    <a href="#"><img src={imagen14} alt="Instagram Icon" /></a>
+                    <a href="#"><img src={imagen15} alt="LinkedIn Icon" /></a>
+                    <a href="#"><img src={imagen16} alt="TikTok Icon" /></a>
+                    <a href="#"><img src={imagen17} alt="Dribbble Icon" /></a>
+                  </div>
+              </div>
+          </footer>
         </div>
-      </footer>
-    </div>
-    </div>
+      </div>
   );
 };
 

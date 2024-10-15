@@ -84,7 +84,7 @@ nav a{
 
 
 
-
+/* Que hacemos*/
 .container {
   max-width: 1600px;
   margin: 0 auto;
@@ -217,7 +217,7 @@ nav a{
 
 
 
-
+/*Preguntas*/
 .faq-section-container {
   transform: scale(1.2); 
   transform-origin: top; 
@@ -253,4 +253,78 @@ nav a{
 
 .faq-item {
   max-width: 100%;
+}
+
+
+
+/* Footer*/
+.coesk-footer-wrapper {
+  background-color: #f5f8ff;
+  padding: 40px 0;
+}
+
+.coesk-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 0;
+  background: none;
+}
+
+.coesk-footer-content {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.coesk-logo-section {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.coesk-logo-img {
+  width: 60px;
+  height: auto;
+}
+
+.coesk-footer-description {
+  font-size: 16px;
+  color: #6b7280; 
+  margin-top: 8px;
+  max-width: 400px;
+}
+
+.coesk-menu-section {
+  display: flex;
+  gap: 40px;
+  color: #6b7280;
+}
+
+.coesk-menu-section a {
+  color: #6b7280;
+  text-decoration: none;
+}
+
+.coesk-social-section {
+  display: flex;
+  gap: 16px;
+}
+
+.coesk-social-section a {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  background-color: #e5e7eb;
+  border-radius: 50%;
+  color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.coesk-social-section a:hover {
+  background-color: #6b7280;
 }
