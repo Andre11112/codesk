@@ -1,0 +1,44 @@
+:root {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --header-bg: #ffffff;
+  --card-bg: #ffffff;
+}
+
+.dark-mode {
+  --bg-color: #1a1a1a;
+  --text-color: #ffffff;
+  --header-bg: #2c2c2c;
+  --card-bg: #3a3a3a;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+header {
+  background-color: var(--header-bg);
+}
+
+.service-item, .faq-item {
+  background-color: var(--card-bg);
+}
+
+.dark-mode .botonInicioSesion {
+  background: linear-gradient(180deg, rgb(200, 0, 50) 0%, rgb(200, 100, 80) 100%);
+}
+
+.dark-mode .hero-bg {
+  background: 
+    url('../assets/images/30.png') center center no-repeat, 
+    linear-gradient(rgba(26, 26, 26, 1) 100%, rgba(26, 26, 26, 1) 100%);
+}
+
+.dark-mode nav a {
+  color: #ffffff; /* Color de texto en modo oscuro */
+}
+
+.dark-mode nav a:hover {
+  color: #cccccc; /* Color de texto al pasar el mouse en modo oscuro */
+}

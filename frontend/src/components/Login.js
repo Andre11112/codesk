@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
 
 function Login() {
+  const [isProgrammer, setIsProgrammer] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     programmerCode: ''
   });
-  const [isProgrammer, setIsProgrammer] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -19,18 +19,32 @@ function Login() {
     e.preventDefault();
     try {
       const endpoint = isProgrammer ? '/api/auth/login/programmer' : '/api/auth/login';
+      const dataToSend = isProgrammer 
+        ? { email: formData.email, password: formData.password, programmerCode: formData.programmerCode }
+        : { email: formData.email, password: formData.password };
+      
+      console.log('Datos enviados al servidor:', dataToSend);
+      
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         credentials: 'include',
-        body: JSON.stringify(formData),
+        body: JSON.stringify(dataToSend),
       });
+
       const data = await response.json();
+
       if (response.ok) {
         localStorage.setItem('token', data.token);
-        navigate('/select-project');
+        localStorage.setItem('userType', isProgrammer ? 'programmer' : 'user');
+        
+        if (isProgrammer) {
+          navigate('/typeprogrammer');
+        } else {
+          navigate('/select-project');
+        }
       } else {
         alert(`Error al iniciar sesión: ${data.error}`);
       }
@@ -38,10 +52,6 @@ function Login() {
       console.error('Error al iniciar sesión:', error);
       alert('Error al iniciar sesión: ' + error.message);
     }
-  };
-
-  const toggleUserType = () => {
-    setIsProgrammer(!isProgrammer);
   };
 
   return (
@@ -86,12 +96,6 @@ function Login() {
             </div>
           )}
           <button type="submit" className="submit-button">Iniciar Sesión</button>
-          <div className="forgot-password">
-            <a href="#">¿Olvidaste tu contraseña?</a>
-          </div>
-          <div className="register">
-            <span>¿No tienes cuenta? </span><a href="/register">Regístrate aquí</a>
-          </div>
         </form>
       </div>
     </div>

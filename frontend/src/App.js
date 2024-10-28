@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link, useLocation } from 'react-router-dom';
 import Home from './components/Home';
 import Register from './components/Register';
@@ -6,18 +6,30 @@ import Login from './components/Login';
 import SelectProject from './components/SelectProject';
 import MobileChat from './components/MobileChat';
 import WebChat from './components/WebChat';
+import TypeProgrammer from './components/typeprogrammer';
 import './App.css';
+import './styles/darkMode.css';
 
-function App() {
+function AppContent() {
     const location = useLocation();
-    const hideHeaderRoutes = ['/login', '/register', '/select-project', '/chat/mobile', '/chat/web', '/'];
+    const hideHeaderRoutes = ['/login', '/register', '/select-project', '/chat/mobile', '/chat/web','/typeprogrammer','/'];
+    const [darkMode, setDarkMode] = useState(localStorage.getItem('darkMode') === 'true');
+
+    useEffect(() => {
+        document.body.classList.toggle('dark-mode', darkMode);
+        localStorage.setItem('darkMode', darkMode);
+    }, [darkMode]);
+
+    const toggleDarkMode = () => {
+        setDarkMode(!darkMode);
+    };
 
     return (
-        <div className="App">
+        <div className={`App ${darkMode ? 'dark-mode' : ''}`}>
             <div className="content-wrapper">
                 {!hideHeaderRoutes.includes(location.pathname) && (
                     <header>
-                        <div className="logo">Codesk</div>
+                        <div className="logo" onClick={toggleDarkMode}>Codesk</div>
                         <nav>
                             <Link to="/">Inicio</Link>
                             <Link to="/#servicios">Servicios</Link>
@@ -31,27 +43,31 @@ function App() {
 
                 <main>
                     <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/register" element={<Register />} />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/select-project" element={<SelectProject />} />
-                        <Route path="/chat/mobile" element={<MobileChat />} />
-                        <Route path="/chat/web" element={<WebChat />} />
+                        <Route path="/" element={<Home darkMode={darkMode} toggleDarkMode={toggleDarkMode} />} />
+                        <Route path="/register" element={<Register darkMode={darkMode} />} />
+                        <Route path="/login" element={<Login darkMode={darkMode} />} />
+                        <Route path="/select-project" element={<SelectProject darkMode={darkMode} />} />
+                        <Route path="/chat/mobile" element={<MobileChat darkMode={darkMode} />} />
+                        <Route path="/chat/web" element={<WebChat darkMode={darkMode} />} />
+                        <Route path="/typeprogrammer" element={<TypeProgrammer />} />
+                        
                     </Routes>
                 </main>
             </div>
 
-            <footer>
+            <footer className={darkMode ? 'dark-mode' : ''}>
                 <p>&copy; 2023 Codesk. Todos los derechos reservados.</p>
             </footer>
         </div>
     );
 }
 
-export default function AppWrapper() {
+function App() {
     return (
         <Router>
-            <App />
+            <AppContent />
         </Router>
     );
 }
+
+export default App;

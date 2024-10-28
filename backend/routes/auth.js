@@ -29,9 +29,8 @@ router.post('/register', async (req, res) => {
 // Ruta de inicio de sesión
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
-  
+
   try {
-    // Buscar el usuario en la base de datos
     const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
     
     if (result.rows.length === 0) {
@@ -39,22 +38,14 @@ router.post('/login', async (req, res) => {
     }
 
     const user = result.rows[0];
-
-    // Verificar la contraseña
     const isValidPassword = await bcrypt.compare(password, user.password_hash);
 
     if (!isValidPassword) {
       return res.status(401).json({ error: 'Credenciales incorrectas' });
     }
 
-    // Generar token JWT
-    const token = jwt.sign(
-      { userId: user.id, email: user.email },
-      process.env.JWT_SECRET,
-      { expiresIn: '1h' }
-    );
+    const token = jwt.sign({ userId: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    // Enviar respuesta exitosa
     res.json({
       message: 'Inicio de sesión exitoso',
       token,
@@ -65,67 +56,41 @@ router.post('/login', async (req, res) => {
         lastName: user.last_name
       }
     });
-
   } catch (error) {
     console.error('Error al iniciar sesión:', error);
     res.status(500).json({ error: 'Error al iniciar sesión' });
   }
 });
 
-// Ruta de registro para programadores
-router.post('/register/programmer', async (req, res) => {
-  const { email, password, firstName, lastName, programmerCode } = req.body;
-  try {
-    // Verificar si el correo ya existe
-    const existingProgrammer = await pool.query('SELECT * FROM programmers WHERE email = $1', [email]);
-    if (existingProgrammer.rows.length > 0) {
-      return res.status(400).json({ error: 'El programador ya existe' });
-    }
 
-    // Hacer hash de la contraseña
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Insertar el nuevo programador
-    const result = await pool.query(
-      'INSERT INTO programmers (email, password, first_name, last_name, programmer_code) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-      [email, hashedPassword, firstName, lastName, programmerCode]
-    );
-    res.status(200).json({ message: 'Registro de programador exitoso', programmer: result.rows[0] });
-  } catch (error) {
-    console.error('Error al registrar programador:', error);
-    res.status(500).json({ error: 'Error al registrar programador' });
-  }
-});
 
 // Ruta de inicio de sesión para programadores
 router.post('/login/programmer', async (req, res) => {
   const { email, password, programmerCode } = req.body;
-  
+
   try {
-    // Buscar el programador en la base de datos
+    console.log('Intentando iniciar sesión con:', { email, programmerCode });
+
     const result = await pool.query('SELECT * FROM programmers WHERE email = $1 AND programmer_code = $2', [email, programmerCode]);
     
     if (result.rows.length === 0) {
+      console.log('Credenciales incorrectas: no se encontró el programador');
       return res.status(401).json({ error: 'Credenciales incorrectas' });
     }
 
     const programmer = result.rows[0];
+    console.log('Programador encontrado:', programmer);
 
-    // Verificar la contraseña
     const isValidPassword = await bcrypt.compare(password, programmer.password_hash);
+    console.log('Contraseña válida:', isValidPassword);
 
     if (!isValidPassword) {
+      console.log('Credenciales incorrectas: contraseña no válida');
       return res.status(401).json({ error: 'Credenciales incorrectas' });
     }
 
-    // Generar token JWT
-    const token = jwt.sign(
-      { userId: programmer.id, email: programmer.email, isProgrammer: true },
-      process.env.JWT_SECRET,
-      { expiresIn: '1h' }
-    );
+    const token = jwt.sign({ userId: programmer.id, email: programmer.email, isProgrammer: true }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    // Enviar respuesta exitosa
     res.json({
       message: 'Inicio de sesión exitoso',
       token,
@@ -137,7 +102,6 @@ router.post('/login/programmer', async (req, res) => {
         programmerCode: programmer.programmer_code
       }
     });
-
   } catch (error) {
     console.error('Error al iniciar sesión como programador:', error);
     res.status(500).json({ error: 'Error al iniciar sesión' });
@@ -145,5 +109,24 @@ router.post('/login/programmer', async (req, res) => {
 });
 
 
+
+// Ruta de registro para programadores
+router.post('/register/programmer', async (req, res) => {
+  const { email, password, firstName, lastName, programmerCode } = req.body; // Cambié password_hash a password
+  try {
+    // Hacer hash de la contraseña
+    const password_hash = await bcrypt.hash(password, 10); // Asegúrate de usar password aquí
+
+    // Insertar el nuevo programador
+    const result = await pool.query(
+      'INSERT INTO programmers (email, password_hash, first_name, last_name, programmer_code) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+      [email, password_hash, firstName, lastName, programmerCode]
+    );
+    res.status(200).json({ message: 'Registro de programador exitoso', programmer: result.rows[0] });
+  } catch (error) {
+    console.error('Error al registrar programador:', error);
+    res.status(500).json({ error: 'Error al registrar programador' });
+  }
+});
 
 module.exports = router;

@@ -8,6 +8,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
+    <script>
+      document.body.classList.toggle('dark-mode', localStorage.getItem('darkMode') === 'true');
+    </script>
     <div id="root"></div>
     <script src="%PUBLIC_URL%/static/js/main.js"></script>
 </body>

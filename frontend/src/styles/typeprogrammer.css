@@ -1,4 +1,4 @@
-.select-project-wrapper {
+.type-programmer-wrapper {
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -16,33 +16,35 @@
     background-color: rgba(0, 0, 0, 0.3);
 }
 
-.select-project-container {
+.type-programmer-container {
     padding: 2rem;
     max-width: 600px;
-    width: 90%;
+    width: 90%; /* Cambiado de 100% a 90% para dar un poco de margen */
     background-color: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
     border-radius: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Añadir estas propiedades */
     position: relative;
     z-index: 1;
-    text-align: center;
 }
 
-.select-project-container h2 {
+/* Títulos */
+.type-programmer-container h1 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     color: white;
 }
 
-.select-project-container p {
+.type-programmer-container p {
     font-size: 1.2rem;
     margin-bottom: 2rem;
     line-height: 1.6;
     color: white;
 }
 
+/* Botones */
 .buttons {
     display: flex;
     gap: 1rem;
@@ -97,6 +99,79 @@
     height: 300px;
 }
 
+/* Estilos del modal */
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.7);
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s all;
+    color: #333;
+    max-width: 90%;
+    width: 400px;
+}
+
+.modal.active {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Títulos del modal */
+.modal h2 {
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+/* Lista dentro del modal */
+.modal ul {
+    text-align: left;
+    margin-left: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.modal li {
+    margin: 0.5rem 0;
+}
+
+/* Botón de cerrar modal */
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #333;
+}
+
+/* Overlay */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s all;
+    z-index: 999;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Asegurarse de que el cuerpo y el html ocupen toda la altura */
 html, body {
     height: 100%;
     margin: 0;
@@ -104,5 +179,5 @@ html, body {
 }
 
 body {
-    overflow-x: hidden;
+    overflow-x: hidden; /* Prevenir scroll horizontal */
 }
