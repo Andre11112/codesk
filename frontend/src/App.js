@@ -13,6 +13,7 @@ import './styles/darkMode.css';
 function AppContent() {
     const location = useLocation();
     const hideHeaderRoutes = ['/login', '/register', '/select-project', '/chat/mobile', '/chat/web','/typeprogrammer','/'];
+    const hideFooterRoutes = [ '/select-project','/typeprogrammer','/chat/web','/chat/mobilechat'];
     const [darkMode, setDarkMode] = useState(localStorage.getItem('darkMode') === 'true');
 
     useEffect(() => {
@@ -55,9 +56,11 @@ function AppContent() {
                 </main>
             </div>
 
-            <footer className={darkMode ? 'dark-mode' : ''}>
-                <p>&copy; 2023 Codesk. Todos los derechos reservados.</p>
-            </footer>
+            {!hideFooterRoutes.includes(location.pathname) && (
+                <footer className={darkMode ? 'dark-mode' : ''}>
+                    <p>&copy; 2023 Codesk. Todos los derechos reservados.</p>
+                </footer>
+            )}
         </div>
     );
 }

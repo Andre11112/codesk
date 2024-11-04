@@ -1,30 +1,77 @@
 .register-container {
-  background: white; /* Fondo blanco */
-  border-radius: 10px; /* Bordes redondeados */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra */
-  padding: 40px; /* Espaciado interno */
-  width: 400px; /* Ancho del contenedor */
-  margin: auto; /* Centrar texto */
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.form-content {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(5px);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+  z-index: 2;
+  margin: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-image: url('../assets/images/31.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid rgba(221, 221, 221, 0.8);
+  border-radius: 4px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.3);
+  color: #333;
+  backdrop-filter: blur(5px);
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #8b4488;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 0 2px rgba(139, 68, 136, 0.1);
+}
+
+.form-group input::placeholder {
+  color: rgba(51, 51, 51, 0.7);
+  opacity: 1;
+}
+
+.recaptcha-container {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(5px);
 }
 
 h2 {
-  color: #333; /* Color del título */
-  margin-bottom: 20px; /* Espaciado inferior */
+  color: #333;
+  margin-bottom: 20px;
 }
 
 .form-content p {
-  color: #777; /* Color del texto secundario */
+  color: #777;
 }
 
 .form-group {
-  margin-bottom: 20px; /* Espaciado entre grupos de entrada */
+  margin-bottom: 20px;
 }
 
 .form-group label {
-  display: block; /* Hacer que las etiquetas ocupen toda la línea */
-  margin-bottom: 5px; /* Espaciado inferior */
-  font-size: 14px; /* Tamaño de fuente */
-  color: #333; /* Color de las etiquetas */
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #333;
 }
 
 .form-group input,
@@ -34,51 +81,50 @@ h2 {
   border: 1px solid #ddd;
   border-radius: 5px;
   font-size: 16px;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.3);
   color: #333;
 }
 
 .form-group input:focus,
 .form-group select:focus {
-  border-color: #007bff; /* Color del borde al enfocar */
+  border-color: #007bff;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .recaptcha-container {
   display: flex;
-  align-items: center; /* Alinear verticalmente */
-  margin-top: 10px; /* Espaciado superior */
+  align-items: center;
+  margin-top: 10px;
 }
 
 .recaptcha-container input {
-  margin-right: 10px; /* Espaciado a la derecha */
+  margin-right: 10px;
 }
 
 button {
-  width: 100%; /* Ancho completo */
-  padding: 10px; /* Espaciado interno */
-  background-color: rgba(0, 123, 255, 0.8); /* Color de fondo del botón */
-  color: white; /* Color del texto */
-  border: none; /* Sin borde */
-  border-radius: 5px; /* Bordes redondeados */
-  font-size: 16px; /* Tamaño de fuente */
-  cursor: pointer; /* Cambiar cursor al pasar */
-  margin-top: 20px; /* Espaciado superior */
+  width: 100%;
+  padding: 10px;
+  background-color: rgba(0, 123, 255, 0.8);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
 }
 
 button:hover {
-  background-color: rgba(0, 123, 255, 1); /* Color de fondo al pasar el mouse */
+  background-color: rgba(0, 123, 255, 1);
 }
 
 .footer-text {
-  margin-top: 20px; /* Espaciado superior */
-  font-size: 14px; /* Tamaño de fuente */
-  color: #777; /* Color del texto */
+  margin-top: 20px;
+  font-size: 14px;
+  color: #777;
 }
 
-/* Añadir un nuevo contenedor para los estilos específicos */
 .register-page {
-  /* Estilos específicos para la página de registro */
-  background-color: #f9f9f9; /* Color de fondo */
+  background-color: #f9f9f9;
   display: flex;
   justify-content: center;
   align-items: center;

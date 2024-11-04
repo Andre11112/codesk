@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/register.css';
 
+
 const Register = () => {
   const [isProgrammer, setIsProgrammer] = useState(false);
   const [formData, setFormData] = useState({
@@ -48,7 +49,7 @@ const Register = () => {
   };
 
   return (
-    <div className="register-container">
+    <div className="register-container" >
       <div className="form-content">
         <div className="user-type-toggle">
           <button className={!isProgrammer ? 'active' : ''} onClick={() => setIsProgrammer(false)}>Usuario</button>
@@ -100,7 +101,7 @@ const Register = () => {
               onChange={handleChange}
               required
             />
-            <small>Utiliza 8 o más caracteres con una combinación de letras, números y símbolos</small>
+            <small className="dark-text">Utiliza 8 o más caracteres con una combinación de letras, números y símbolos</small>
           </div>
           {isProgrammer && (
             <div className="form-group">

@@ -96,6 +96,9 @@ function Login() {
             </div>
           )}
           <button type="submit" className="submit-button">Iniciar Sesión</button>
+          <div className="register-prompt">
+            <p>¿No tienes una cuenta? <a href="/register">Regístrate aquí</a></p>
+          </div>
         </form>
       </div>
     </div>

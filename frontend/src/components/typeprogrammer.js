@@ -27,8 +27,9 @@ const TypeProgrammer = () => {
     return (
         <div className="type-programmer-wrapper" style={{backgroundImage: `url(${backgroundImage})`}}>
             <div className="type-programmer-container">
-                <h1>Desarrollo de Software</h1>
-                <p>Especialista en crear soluciones digitales innovadoras y eficientes para tus necesidades tecnológicas.</p>
+                <h1>Codesk Para desarrolladores</h1>
+                <p>Especialista en crear soluciones digitales innovadoras y eficientes para tus necesidades tecnológicas.
+                    Selecciona Tu especialidad de desarrollo: </p>
                 <div className="buttons">
                     <button onClick={() => handleSelection('web')} className="button web">Programador Web</button>
                     <button onClick={() => handleSelection('mobile')} className="button mobile">Programador Móvil</button>

@@ -112,12 +112,9 @@ router.post('/login/programmer', async (req, res) => {
 
 // Ruta de registro para programadores
 router.post('/register/programmer', async (req, res) => {
-  const { email, password, firstName, lastName, programmerCode } = req.body; // Cambié password_hash a password
+  const { email, password, firstName, lastName, programmerCode } = req.body;
   try {
-    // Hacer hash de la contraseña
-    const password_hash = await bcrypt.hash(password, 10); // Asegúrate de usar password aquí
-
-    // Insertar el nuevo programador
+    const password_hash = await bcrypt.hash(password, 10);
     const result = await pool.query(
       'INSERT INTO programmers (email, password_hash, first_name, last_name, programmer_code) VALUES ($1, $2, $3, $4, $5) RETURNING *',
       [email, password_hash, firstName, lastName, programmerCode]
