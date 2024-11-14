@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/register.css';
 
-
 const Register = () => {
   const [isProgrammer, setIsProgrammer] = useState(false);
   const [formData, setFormData] = useState({
@@ -14,6 +13,7 @@ const Register = () => {
     securityQuestion: '',
     securityAnswer: '',
     programmerCode: '',
+    status_id: 0,
     recaptcha: false,
   });
   const navigate = useNavigate();
@@ -35,11 +35,16 @@ const Register = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          status_id: isProgrammer ? 0 : null,
+        }),
       });
       const data = await response.json();
       if (response.ok) {
-        navigate('/login');
+        localStorage.setItem('programmerId', data.programmer.id);
+        navigate('/typeprogrammer');
+
       } else {
         alert(`Error en el registro: ${data.error || 'Error desconocido'}`);
       }

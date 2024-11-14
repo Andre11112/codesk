@@ -6,26 +6,53 @@ import backgroundImage from '../assets/images/30.png';
 const TypeProgrammer = () => {
     const navigate = useNavigate();
     const [modalType, setModalType] = useState(null);
+    const [status_id, setStatusId] = useState(null);
 
     const handleSelection = (type) => {
         setModalType(type);
+        setStatusId(type === 'web' ? 1 : (type === 'mobile' ? 2 : null));
     };
 
     const closeModal = () => {
         setModalType(null);
     };
 
-    const handleNavigate = (type) => {
+    const handleNavigate = async () => {
         closeModal();
-        if (type === 'web') {
-            navigate('/chat/web');
-        } else {
-            navigate('/chat/mobile');
+        const programmerId = localStorage.getItem('programmerId');
+        console.log('Programmer ID:', programmerId);
+        console.log('Modal Type:', modalType);
+        try {
+            const response = await fetch('/api/auth/update/status', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    programmerId: programmerId,
+                    status: modalType
+                }),
+            });
+
+            if (response.ok) {
+                if (status_id === 1) {
+                    navigate('/chat/web');
+                } else if (status_id === 2) {
+                    navigate('/chat/mobile');
+                }
+            } else {
+                const errorData = await response.json();
+                console.error('Error al actualizar el estado:', errorData);
+                alert('Error al actualizar el estado: ' + errorData.error);
+            }
+        } catch (error) {
+            console.error('Error al enviar el estado:', error);
+            alert('Error al enviar el estado: ' + error.message);
         }
     };
 
     return (
-        <div className="type-programmer-wrapper" style={{backgroundImage: `url(${backgroundImage})`}}>
+        <div className="type-programmer-wrapper" style={{ backgroundImage: `url(${backgroundImage})` }}>
             <div className="type-programmer-container">
                 <h1>Codesk Para desarrolladores</h1>
                 <p>Especialista en crear soluciones digitales innovadoras y eficientes para tus necesidades tecnológicas.
@@ -35,10 +62,10 @@ const TypeProgrammer = () => {
                     <button onClick={() => handleSelection('mobile')} className="button mobile">Programador Móvil</button>
                 </div>
 
-                {modalType === 'web' && (
-                    <div className="modal active" id="webModal">
+                {modalType && (
+                    <div className="modal active">
                         <button className="close-modal" onClick={closeModal}>&times;</button>
-                        <h2>Desarrollo Web</h2>
+                        <h2>{modalType === 'web' ? 'Desarrollo Web' : 'Desarrollo Móvil'}</h2>
                         <p>Especialista en:</p>
                         <ul>
                             <li>HTML5, CSS3, JavaScript</li>
@@ -46,7 +73,7 @@ const TypeProgrammer = () => {
                             <li>Node.js, PHP, Python</li>
                             <li>Diseño Responsivo</li>
                         </ul>
-                        <button onClick={() => handleNavigate('web')}>Continuar a Chat Web</button>
+                        <button onClick={handleNavigate}>Continuar a Chat Web</button>
                     </div>
                 )}
 
@@ -61,7 +88,7 @@ const TypeProgrammer = () => {
                             <li>React Native</li>
                             <li>Flutter</li>
                         </ul>
-                        <button onClick={() => handleNavigate('mobile')}>Continuar a Chat Móvil</button>
+                        <button onClick={handleNavigate}>Continuar</button>
                     </div>
                 )}
 
