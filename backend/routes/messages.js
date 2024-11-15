@@ -3,31 +3,9 @@ const pool = require('../db');
 
 const router = express.Router();
 
-// Ruta para obtener programadores web (status_id = 1)
-router.get('/api/programmers/web', async (req, res) => {
-    try {
-        const result = await pool.query('SELECT * FROM programmers WHERE status_id = 1');
-        res.json(result.rows);
-    } catch (error) {
-        console.error('Error fetching web programmers:', error);
-        res.status(500).json({ message: 'Error al obtener programadores web' });
-    }
-});
-
-
-// Ruta para obtener programadores móviles (status_id = 2)
-router.get('/api/programmers/mobile', async (req, res) => {
-    try {
-        const result = await pool.query('SELECT * FROM programmers WHERE status_id = 2');
-        res.json(result.rows);
-    } catch (error) {
-        console.error('Error fetching mobile programmers:', error);
-        res.status(500).json({ message: 'Error al obtener programadores móviles' });
-    }
-});
-
 // Ruta para enviar un mensaje
 router.post('/', async (req, res) => {
+    console.log('Datos recibidos:', req.body);
     const { chat_id, sender_id, sender_type, message_text } = req.body;
 
     if (!chat_id || !sender_id || !sender_type || !message_text) {

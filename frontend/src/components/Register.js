@@ -42,9 +42,16 @@ const Register = () => {
       });
       const data = await response.json();
       if (response.ok) {
-        localStorage.setItem('programmerId', data.programmer.id);
-        navigate('/typeprogrammer');
-
+        if (isProgrammer) {
+          if (data.programmer) {
+            localStorage.setItem('programmerId', data.programmer.id);
+            navigate('/typeprogrammer');
+          } else {
+            alert('Error: No se recibió información del programador.');
+          }
+        } else {
+          navigate('/select-project');
+        }
       } else {
         alert(`Error en el registro: ${data.error || 'Error desconocido'}`);
       }

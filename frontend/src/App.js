@@ -9,10 +9,11 @@ import WebChat from './components/WebChat';
 import TypeProgrammer from './components/typeprogrammer';
 import './App.css';
 import './styles/darkMode.css';
+import Conocenos from './components/Conocenos';
 
 function AppContent() {
     const location = useLocation();
-    const hideHeaderRoutes = ['/login', '/register', '/select-project', '/chat/mobile', '/chat/web','/typeprogrammer','/'];
+    const hideHeaderRoutes = ['/login', '/register', '/select-project', '/chat/mobile', '/chat/web','/typeprogrammer','/Conocenos','/'];
     const hideFooterRoutes = [ '/select-project','/typeprogrammer','/chat/web','/chat/mobilechat'];
     const [darkMode, setDarkMode] = useState(localStorage.getItem('darkMode') === 'true');
 
@@ -51,7 +52,7 @@ function AppContent() {
                         <Route path="/chat/mobile" element={<MobileChat darkMode={darkMode} />} />
                         <Route path="/chat/web" element={<WebChat darkMode={darkMode} />} />
                         <Route path="/typeprogrammer" element={<TypeProgrammer />} />
-                        
+                        <Route path="/conocenos" element={<Conocenos />} />
                     </Routes>
                 </main>
             </div>
