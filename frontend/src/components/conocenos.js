@@ -17,7 +17,7 @@ import imagen17 from'../assets/images/17.png';
 
 
 
-const Home = ({ darkMode, toggleDarkMode }) => {
+const onocenos = ({ darkMode, toggleDarkMode }) => {
   return (
     <div className={darkMode ? 'dark-mode' : ''}>
       <header className="bg-white shadow-md sticky top-0 z-10 w-3/4 rounded-3xl mx-auto">
