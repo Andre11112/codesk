@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/contac.css';
+import '../styles/conocenos.css';
 import imagen1 from'../assets/images/1.png';
 import imagen3 from'../assets/images/3.png';
 import imagen4 from'../assets/images/4.png';
