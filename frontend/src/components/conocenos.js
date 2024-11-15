@@ -16,7 +16,6 @@ import imagen16 from'../assets/images/16.png';
 import imagen17 from'../assets/images/17.png';
 
 
-
 const Home = ({ darkMode, toggleDarkMode }) => {
   return (
     <div className={darkMode ? 'dark-mode' : ''}>
