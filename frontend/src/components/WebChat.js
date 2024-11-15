@@ -4,9 +4,7 @@ import '../styles/chat.css';
 
 const WebChat = () => {
     const { type } = useParams();
-    const [messages, setMessages] = useState([
-
-    ]);
+    const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
     const chatMessagesRef = useRef(null);
 
@@ -38,7 +36,7 @@ const WebChat = () => {
     };
 
     return (
-        <div className="chat-container">
+        <div className="chat-container web-chat">
             <div className="sidebar">
                 <div className="sidebar-header">
                     <img src="path_to_logo.png" alt="Logo" className="logo" />
@@ -117,4 +115,3 @@ const WebChat = () => {
 };
 
 export default WebChat;
-

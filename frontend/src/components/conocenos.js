@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/home.css';
+import '../styles/conocenos.css';
 import imagen1 from'../assets/images/1.png';
 import imagen3 from'../assets/images/3.png';
 import imagen4 from'../assets/images/4.png';
@@ -24,7 +24,7 @@ const Home = ({ darkMode, toggleDarkMode }) => {
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">  
           <img src={imagen1} className="logo-image" onClick={toggleDarkMode} style={{cursor: 'pointer'}} alt="Logo" />
           <nav className={`space-x-8 font-semibold ${darkMode ? 'text-white' : 'text-black'}`}>
-            <a href="#" className={`hover:${darkMode ? 'text-gray-300' : 'text-gray-900'}`}>Inicio</a>
+            <a href="/home" className={`hover:${darkMode ? 'text-gray-300' : 'text-gray-900'}`}>Inicio</a>
             <a href="/conocenos" className={`hover:${darkMode ? 'text-white-300' : 'text-gray-900'}`}>Conocenos</a>
             <a href="#" className={`hover:${darkMode ? 'text-gray-300' : 'text-gray-900'}`}>Trabajos</a>
             <a href="#" className={`hover:${darkMode ? 'text-gray-300' : 'text-gray-900'}`}>Contactanos</a>
@@ -37,12 +37,6 @@ const Home = ({ darkMode, toggleDarkMode }) => {
         </div>
       </header>
 
-      <section className="hero-bg py-20 flex items-center justify-center h-screen text-center">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-8xl font-bold mb-6">Crea tus experiencias con nosotros</h1>
-          <button className="bg-black text-white py-3 px-6 rounded-lg font-semibold hover:bg-gray-800 w-2/5">Contáctanos</button>
-        </div>
-      </section>
 
       <section class="py-16 services-section">
       <div class="container text-center">
@@ -146,7 +140,7 @@ const Home = ({ darkMode, toggleDarkMode }) => {
 
 
       <div className="mt-16 bg-#f5f8ff"> 
-            <footer class="w-[70%] bg-white shadow-md sticky top-0 z-10 rounded-3xl mx-auto">
+            <footer class="w-[65%] bg-white shadow-md sticky top-0 z-10 rounded-3xl mx-auto">
               <div class="max-w-6xl mx-auto text-left coesk-footer-content">
                   <div class="coesk-logo-section">
                       <img src={imagen12} alt="Logo" class="coesk-logo-img"/>

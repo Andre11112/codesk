@@ -112,15 +112,12 @@ router.post('/login/programmer', async (req, res) => {
 
 // Ruta de registro para programadores
 router.post('/register/programmer', async (req, res) => {
-  const { email, password, firstName, lastName, programmerCode } = req.body; // Cambié password_hash a password
+  const { email, password, firstName, lastName, programmerCode, status_id } = req.body;
   try {
-    // Hacer hash de la contraseña
-    const password_hash = await bcrypt.hash(password, 10); // Asegúrate de usar password aquí
-
-    // Insertar el nuevo programador
+    const password_hash = await bcrypt.hash(password, 10);
     const result = await pool.query(
-      'INSERT INTO programmers (email, password_hash, first_name, last_name, programmer_code) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-      [email, password_hash, firstName, lastName, programmerCode]
+      'INSERT INTO programmers (email, password_hash, first_name, last_name, programmer_code, status_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+      [email, password_hash, firstName, lastName, programmerCode, status_id !== null ? status_id : 0]
     );
     res.status(200).json({ message: 'Registro de programador exitoso', programmer: result.rows[0] });
   } catch (error) {
@@ -128,5 +125,45 @@ router.post('/register/programmer', async (req, res) => {
     res.status(500).json({ error: 'Error al registrar programador' });
   }
 });
+
+
+
+// Ruta para actualizar el estado del programador
+router.put('/update/status', async (req, res) => {
+  const { programmerId, status } = req.body;
+
+  try {
+    let id_status;
+    if (status === 'web') {
+      id_status = 1;
+    } else if (status === 'mobile') {
+      id_status = 2;
+    } else {
+      console.error('Estado no válido recibido:', status);
+      return res.status(400).json({ error: 'Estado no válido' });
+    }
+
+    console.log('ID del programador:', programmerId);
+    console.log('Estado recibido:', status);
+
+    const result = await pool.query(
+      'UPDATE programmers SET status_id = $1 WHERE id = $2 RETURNING *',
+      [id_status, programmerId]
+    );
+
+    if (result.rows.length === 0) {
+      console.error('Programador no encontrado con ID:', programmerId);
+      return res.status(404).json({ error: 'Programador no encontrado' });
+    }
+
+    res.status(200).json({ message: 'Estado actualizado exitosamente', programmer: result.rows[0] });
+  } catch (error) {
+    console.error('Error al actualizar el estado:', error.message);
+    res.status(500).json({ error: 'Error al actualizar el estado' });
+  }
+});
+
+
+
 
 module.exports = router;

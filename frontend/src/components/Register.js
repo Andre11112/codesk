@@ -13,6 +13,7 @@ const Register = () => {
     securityQuestion: '',
     securityAnswer: '',
     programmerCode: '',
+    status_id: 0,
     recaptcha: false,
   });
   const navigate = useNavigate();
@@ -34,11 +35,16 @@ const Register = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          status_id: isProgrammer ? 0 : null,
+        }),
       });
       const data = await response.json();
       if (response.ok) {
-        navigate('/login');
+        localStorage.setItem('programmerId', data.programmer.id);
+        navigate('/typeprogrammer');
+
       } else {
         alert(`Error en el registro: ${data.error || 'Error desconocido'}`);
       }
@@ -48,7 +54,7 @@ const Register = () => {
   };
 
   return (
-    <div className="register-container">
+    <div className="register-container" >
       <div className="form-content">
         <div className="user-type-toggle">
           <button className={!isProgrammer ? 'active' : ''} onClick={() => setIsProgrammer(false)}>Usuario</button>
@@ -100,7 +106,7 @@ const Register = () => {
               onChange={handleChange}
               required
             />
-            <small>Utiliza 8 o más caracteres con una combinación de letras, números y símbolos</small>
+            <small className="dark-text">Utiliza 8 o más caracteres con una combinación de letras, números y símbolos</small>
           </div>
           {isProgrammer && (
             <div className="form-group">

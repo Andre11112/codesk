@@ -18,7 +18,7 @@ body {
 nav a{
   justify-content: space-between;
   align-items: center;
-  background-color: white;
+  background-color: white; 
   color:black;
 }
 
@@ -47,7 +47,7 @@ nav a{
 .hero-bg {
   background: 
     url('../assets/images/30.png') center center no-repeat, 
-    linear-gradient( rgba(245, 248, 255, 1) 100%, rgba(245, 2488, 255, 1) 100%); 
+    linear-gradient( white 100%, white 100%); 
     background-size: 868.557px 882.805px;
     background-attachment: fixed; 
     position: relative; 
@@ -87,9 +87,9 @@ nav a{
 
 /* Que hacemos*/
 .container {
-  max-width: 1380px; /* Aumentado un 15% de 1200px */
+  max-width: 1380px; 
   margin: 0 auto;
-  padding: 0 23px; /* Aumentado un 15% de 20px */
+  padding: 0 23px; 
   overflow-x: hidden;
   transition: transform 0.3s ease-in-out;
 }
@@ -309,6 +309,6 @@ nav a{
 }
 
 .coesk-social-section a:hover {
-  background-color: #2966df;
+  background-color: black;
 }
 
