@@ -10,12 +10,26 @@ import TypeProgrammer from './components/typeprogrammer';
 import './App.css';
 import './styles/darkMode.css';
 import Conocenos from './components/Conocenos';
+import WebChatUser from './components/WebChatUser';
+import MobileChatUser from './components/MobileChatUser';
+import ProjectDetailsMovil from './components/ProjectDetailsMovil';
+import ProjectDetailsWeb from './components/ProjectDetailsWeb';
+import Payment from './components/Payment';
+import SelectUserProject from './components/SelectUserProject';
 
 function AppContent() {
     const location = useLocation();
-    const hideHeaderRoutes = ['/login', '/register', '/select-project', '/chat/mobile', '/chat/web','/typeprogrammer','/Conocenos','/'];
-    const hideFooterRoutes = [ '/select-project','/typeprogrammer','/chat/web','/chat/mobilechat'];
-    const [darkMode, setDarkMode] = useState(localStorage.getItem('darkMode') === 'true');
+    const hideHeaderRoutes = ['/','/login', '/register', '/select-project',
+         '/chat/mobile', '/chat/web','/chat/user/web',
+         '/chat/user/mobile','/typeprogrammer','/project-details-mobile',
+         '/project-details-web','/Conocenos','/payment'];
+    
+    
+         const hideFooterRoutes = [ '/select-project','/typeprogrammer','/chat/web',
+        '/chat/mobilechat','/chat/user/web','/chat/user/mobile ','/chat/programmer/web',
+        '/chat/programmer/mobile'];
+    
+        const [darkMode, setDarkMode] = useState(localStorage.getItem('darkMode') === 'true');
 
     useEffect(() => {
         document.body.classList.toggle('dark-mode', darkMode);
@@ -53,6 +67,14 @@ function AppContent() {
                         <Route path="/chat/web" element={<WebChat darkMode={darkMode} />} />
                         <Route path="/typeprogrammer" element={<TypeProgrammer />} />
                         <Route path="/conocenos" element={<Conocenos />} />
+                        <Route path="/chat/user/web" element={<WebChatUser darkMode={darkMode} />} />
+                        <Route path="/chat/user/mobile" element={<MobileChatUser darkMode={darkMode} />} />
+                        <Route path="/chat/programmer/web" element={<WebChat darkMode={darkMode} />} />
+                        <Route path="/chat/programmer/mobile" element={<MobileChat darkMode={darkMode} />} />
+                        <Route path="/project-details-mobile" element={<ProjectDetailsMovil projectType="mobile" />} />
+                        <Route path="/project-details-web" element={<ProjectDetailsWeb projectType="web" />} />
+                        <Route path="/payment" element={<Payment />} />
+                        <Route path="/select-user-project" element={<SelectUserProject />} />
                     </Routes>
                 </main>
             </div>

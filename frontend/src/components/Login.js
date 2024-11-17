@@ -30,19 +30,23 @@ function Login() {
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include',
         body: JSON.stringify(dataToSend),
       });
 
       const data = await response.json();
+      console.log('Respuesta del servidor:', data);
 
       if (response.ok) {
+        // Guardar todos los datos necesarios en localStorage
         localStorage.setItem('token', data.token);
         localStorage.setItem('userType', isProgrammer ? 'programmer' : 'user');
         
         if (isProgrammer) {
+          localStorage.setItem('programmerId', data.programmer.id);
           navigate('/typeprogrammer');
         } else {
+          localStorage.setItem('userId', data.user.id);
+          console.log('userId guardado:', data.user.id);
           navigate('/select-project');
         }
       } else {

@@ -1,56 +1,39 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
-import Alert, { AlertDescription } from './ui/Alert';
-import '../styles/chat.css'; 
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import Alert from './ui/Alert';
+import { AlertDescription } from './ui/Alert';
+import '../styles/chat.css';
 
-const MobileChat = () => {
+const MobileChatUser = () => {
     const [programmers, setProgrammers] = useState([]);
-    const [activeChats, setActiveChats] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [messages, setMessages] = useState({});
     const [newMessage, setNewMessage] = useState('');
     const [selectedProgrammer, setSelectedProgrammer] = useState(null);
     const chatMessagesRef = useRef(null);
-    const ws = useRef(null);
-
-    useEffect(() => {
-        ws.current = new WebSocket('ws://localhost:8080');
-
-        ws.current.onmessage = (event) => {
-            const message = JSON.parse(event.data);
-            setMessages((prevMessages) => ({
-                ...prevMessages,
-                [message.sender_id]: [...(prevMessages[message.sender_id] || []), message],
-            }));
-            setActiveChats((prev) => [...new Set([...prev, message.sender_id])]);
-        };
-
-        return () => {
-            ws.current.close();
-        };
-    }, []);
-
-    const getMobileUsers = useCallback(async () => {
+    
+    const getMobileProgrammers = useCallback(async () => {
         try {
             setLoading(true);
             setError(null);
-            const response = await fetch('/api/users/mobile');
+            const response = await fetch('/api/chat/programmers/mobile'); // Asegúrate de que esta ruta sea correcta
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data = await response.json();
             setProgrammers(data);
         } catch (error) {
-            console.error('Error fetching mobile users:', error);
-            setError('No se pudieron cargar los usuarios móviles. Por favor, intente más tarde.');
+            console.error('Error fetching mobile programmers:', error);
+            setError('No se pudieron cargar los programadores móviles. Por favor, intente más tarde.');
         } finally {
             setLoading(false);
         }
     }, []);
+    
 
     useEffect(() => {
-        getMobileUsers();
-    }, [getMobileUsers]);
+        getMobileProgrammers();
+    }, [getMobileProgrammers]);
 
     useEffect(() => {
         if (chatMessagesRef.current) {
@@ -58,9 +41,7 @@ const MobileChat = () => {
         }
     }, [messages]);
 
-    const loadChatHistory = async (chatId) => {
-        if (!selectedProgrammer) return;
-
+    const loadChatHistory = async (chatId, programmerId) => {
         try {
             const response = await fetch(`/api/chat/history/${chatId}`);
             if (!response.ok) {
@@ -69,48 +50,14 @@ const MobileChat = () => {
             const history = await response.json();
             setMessages(prevMessages => ({
                 ...prevMessages,
-                [selectedProgrammer.id]: [...(prevMessages[selectedProgrammer.id] || []), ...history]
+                [programmerId]: [...(prevMessages[programmerId] || []), ...history]
             }));
         } catch (error) {
             console.error('Error al cargar historial:', error);
             setError('Error al cargar el historial del chat');
         }
     };
-
-    const handleSendMessage = async () => {
-        if (!newMessage.trim() || !selectedProgrammer) return;
-
-        const userId = localStorage.getItem('userId');
-        const chatId = localStorage.getItem('currentChatId');
-
-        if (!chatId || !userId) {
-            console.error('Falta información necesaria para enviar el mensaje');
-            return;
-        }
-
-        const messageData = {
-            chat_id: parseInt(chatId),
-            sender_id: parseInt(userId),
-            sender_type: 'user',
-            message_text: newMessage,
-        };
-
-        ws.current.send(JSON.stringify(messageData));
-
-        setMessages((prevMessages) => ({
-            ...prevMessages,
-            [selectedProgrammer.id]: [...(prevMessages[selectedProgrammer.id] || []), messageData],
-        }));
-        setNewMessage('');
-    };
-
-    const handleKeyPress = (e) => {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            handleSendMessage();
-        }
-    };
-
+    
     const handleProgrammerSelect = async (programmer) => {
         setSelectedProgrammer(programmer);
         
@@ -120,7 +67,7 @@ const MobileChat = () => {
                 setError('Error: Usuario no identificado');
                 return;
             }
-
+    
             const response = await fetch('/api/chat/create', {
                 method: 'POST',
                 headers: {
@@ -131,18 +78,79 @@ const MobileChat = () => {
                     programmer_id: programmer.id
                 })
             });
-
+    
             if (!response.ok) {
                 throw new Error('Error al crear el chat');
             }
-
+    
             const data = await response.json();
             localStorage.setItem('currentChatId', data.chat_id.toString());
-
-            await loadChatHistory(data.chat_id);
+    
+            // Cargar historial del chat
+            await loadChatHistory(data.chat_id, programmer.id);
         } catch (error) {
             console.error('Error al iniciar el chat:', error);
             setError('Error al iniciar el chat. Por favor, intente nuevamente.');
+        }
+    };
+    
+    const handleSendMessage = async () => {
+        if (!newMessage.trim() || !selectedProgrammer) return;
+    
+        const userId = localStorage.getItem('userId');
+        const chatId = localStorage.getItem('currentChatId');
+    
+        if (!chatId || !userId) {
+            console.error('Falta información necesaria para enviar el mensaje');
+            return;
+        }
+    
+        try {
+            const response = await fetch('/api/messages', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: parseInt(chatId),
+                    sender_id: parseInt(userId),
+                    sender_type: 'user',
+                    message_text: newMessage,
+                }),
+            });
+    
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Error al enviar el mensaje');
+            }
+    
+            const newMessageData = await response.json();
+            setMessages(prev => ({
+                ...prev,
+                [selectedProgrammer.id]: [...(prev[selectedProgrammer.id] || []), newMessageData]
+            }));
+            setNewMessage('');
+    
+            // Actualizar last_message_at
+            await fetch(`/api/chat/status/${chatId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    status: 'active'
+                })
+            });
+        } catch (error) {
+            console.error('Error al enviar el mensaje:', error);
+            setError('Error al enviar el mensaje. Por favor, intente nuevamente.');
+        }
+    };
+
+   
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            handleSendMessage();
         }
     };
 
@@ -150,20 +158,9 @@ const MobileChat = () => {
         <div className="flex h-screen bg-gray-100">
             <div className="w-1/4 bg-white shadow-lg overflow-y-auto">
                 <div className="p-4 border-b">
-                    <h2 className="text-xl font-bold">Usuarios Móviles</h2>
+                    <h2 className="text-xl font-bold">Programadores Mobile Disponibles</h2>
                 </div>
-                <div className="p-4 border-b">
-                    <h2 className="text-xl font-bold">Chats Activos</h2>
-                    {activeChats.length === 0 ? (
-                        <p>No hay chats activos.</p>
-                    ) : (
-                        activeChats.map(chatId => (
-                            <div key={chatId} className="p-2 border rounded-lg">
-                                <p>Chat con Programador ID: {chatId}</p>
-                            </div>
-                        ))
-                    )}
-                </div>
+                
                 {error && (
                     <Alert variant="destructive" className="m-4">
                         <AlertDescription>{error}</AlertDescription>
@@ -171,22 +168,28 @@ const MobileChat = () => {
                 )}
                 
                 {loading ? (
-                    <div className="p-4">Cargando usuarios...</div>
+                    <div className="p-4">Cargando programadores...</div>
                 ) : programmers.length === 0 ? (
                     <div className="p-4 text-center text-gray-500">
-                        <p>No hay usuarios móviles disponibles en este momento</p>
+                        <p>No hay programadores móviles disponibles en este momento</p>
+                        <p className="text-sm mt-2">Por favor, intente más tarde</p>
                     </div>
                 ) : (
                     <div className="space-y-4 p-4">
                         {programmers.map((programmer) => (
                             <div 
                                 key={programmer.id} 
-                                className="p-4 border rounded-lg hover:bg-gray-50 transition-colors cursor-pointer"
+                                className={`p-4 border rounded-lg cursor-pointer transition-colors ${
+                                    selectedProgrammer?.id === programmer.id 
+                                        ? 'bg-blue-50 border-blue-500' 
+                                        : 'hover:bg-gray-50'
+                                }`}
                                 onClick={() => handleProgrammerSelect(programmer)}
                             >
                                 <h3 className="font-medium">
                                     {programmer.first_name} {programmer.last_name}
                                 </h3>
+                                <p className="text-sm text-gray-500">{programmer.email}</p>
                             </div>
                         ))}
                     </div>
@@ -196,9 +199,7 @@ const MobileChat = () => {
             <div className="flex-1 flex flex-col">
                 <div className="p-4 border-b bg-white shadow">
                     <h3 className="text-lg font-semibold">
-                        {selectedProgrammer ? 
-                            `Conversación con ${selectedProgrammer.first_name} ${selectedProgrammer.last_name}` : 
-                            'Selecciona un programador para chatear'}
+                        {selectedProgrammer ? `Conversación con ${selectedProgrammer.first_name} ${selectedProgrammer.last_name}` : 'Selecciona un programador para chatear'}
                     </h3>
                 </div>
 
@@ -232,16 +233,10 @@ const MobileChat = () => {
                             value={newMessage}
                             onChange={(e) => setNewMessage(e.target.value)}
                             onKeyPress={handleKeyPress}
-                            disabled={!selectedProgrammer}
                         />
                         <button
-                            onClick={() => handleSendMessage()}
-                            className={`px-6 py-2 rounded-lg transition-colors ${
-                                selectedProgrammer 
-                                    ? 'bg-blue-500 hover:bg-blue-600 text-white' 
-                                    : 'bg-gray-300 cursor-not-allowed text-gray-500'
-                            }`}
-                            disabled={!selectedProgrammer}
+                            onClick={handleSendMessage}
+                            className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
                         >
                             Enviar
                         </button>
@@ -252,4 +247,4 @@ const MobileChat = () => {
     );
 };
 
-export default MobileChat;
+export default MobileChatUser; 
