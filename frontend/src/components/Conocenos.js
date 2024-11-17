@@ -1,6 +1,11 @@
 import React from 'react';
 import '../styles/Conocenos.css';
 import imagen1 from'../assets/images/1.png';
+import imagen12 from'../assets/images/12.png';
+import imagen14 from'../assets/images/14.png';
+import imagen15 from'../assets/images/15.png';
+import imagen16 from'../assets/images/16.png';
+import imagen17 from'../assets/images/17.png';
 
 
 const Conocenos = ({ darkMode, toggleDarkMode }) => {
@@ -22,7 +27,33 @@ const Conocenos = ({ darkMode, toggleDarkMode }) => {
           </div>
         </div>
       </header>
+
+      <div className="mt-16 bg-#f5f8ff"> 
+            <footer class="w-[70%] bg-white shadow-md sticky top-0 z-10 rounded-3xl mx-auto">
+              <div class="max-w-6xl mx-auto text-left coesk-footer-content">
+                  <div class="coesk-logo-section">
+                      <img src={imagen12} alt="Logo" class="coesk-logo-img"/>
+                      <p class="coesk-footer-description">¿Listo para elevar su presencia en línea? Contáctenos hoy para discutir su proyecto y descubrir cómo podemos hacer realidad su visión.</p>
+                  </div>
+                    <div class="coesk-menu-section">
+                        <a href="/Home" class="hover:underline">Inicio</a>
+                        <a href="/Conocenos" class="hover:underline">Conócenos</a>
+                        <a href="#" class="hover:underline">Trabajos</a>
+                        <a href="#" class="hover:underline">Contáctanos</a>
+                    </div>
+                  <div class="coesk-social-section">
+                    <a href="#"><img src={imagen14} alt="Instagram Icon" /></a>
+                    <a href="#"><img src={imagen15} alt="LinkedIn Icon" /></a>
+                    <a href="#"><img src={imagen16} alt="TikTok Icon" /></a>
+                    <a href="#"><img src={imagen17} alt="Dribbble Icon" /></a>
+                  </div>
+              </div>
+          </footer>
+        </div>
+
+
     </div>
+    
   );
 };
 

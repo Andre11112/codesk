@@ -153,8 +153,8 @@ const Home = ({ darkMode, toggleDarkMode }) => {
                       <p class="coesk-footer-description">¿Listo para elevar su presencia en línea? Contáctenos hoy para discutir su proyecto y descubrir cómo podemos hacer realidad su visión.</p>
                   </div>
                     <div class="coesk-menu-section">
-                        <a href="#" class="hover:underline">Inicio</a>
-                        <a href="#" class="hover:underline">Conócenos</a>
+                        <a href="/Home" class="hover:underline">Inicio</a>
+                        <a href="/Conocenos" class="hover:underline">Conócenos</a>
                         <a href="#" class="hover:underline">Trabajos</a>
                         <a href="#" class="hover:underline">Contáctanos</a>
                     </div>
