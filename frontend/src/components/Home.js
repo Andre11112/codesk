@@ -14,6 +14,7 @@ import imagen14 from'../assets/images/14.png';
 import imagen15 from'../assets/images/15.png';
 import imagen16 from'../assets/images/16.png';
 import imagen17 from'../assets/images/17.png';
+import imagen30 from'../assets/images/30.png';
 
 
 const Home = ({ darkMode, toggleDarkMode }) => {
