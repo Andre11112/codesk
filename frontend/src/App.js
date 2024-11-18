@@ -10,11 +10,13 @@ import TypeProgrammer from './components/typeprogrammer';
 import './App.css';
 import './styles/darkMode.css';
 import Conocenos from './components/Conocenos';
+import WebChatUser from './components/WebChatUser';
+import MobileChatUser from './components/MobileChatUser';
 
 function AppContent() {
     const location = useLocation();
-    const hideHeaderRoutes = ['/login', '/register', '/select-project', '/chat/mobile', '/chat/web','/typeprogrammer','/Conocenos','/'];
-    const hideFooterRoutes = [ '/select-project','/typeprogrammer','/chat/web','/chat/mobilechat'];
+    const hideHeaderRoutes = ['/login', '/register', '/select-project', '/chat/mobile', '/chat/web','/chat/user/web','/chat/user/mobile','/typeprogrammer','/Conocenos','/'];
+    const hideFooterRoutes = [ '/select-project','/typeprogrammer','/chat/web','/chat/mobilechat','/chat/programmer/web','/chat/programmer/mobile'];
     const [darkMode, setDarkMode] = useState(localStorage.getItem('darkMode') === 'true');
 
     useEffect(() => {
@@ -53,6 +55,10 @@ function AppContent() {
                         <Route path="/chat/web" element={<WebChat darkMode={darkMode} />} />
                         <Route path="/typeprogrammer" element={<TypeProgrammer />} />
                         <Route path="/conocenos" element={<Conocenos />} />
+                        <Route path="/chat/user/web" element={<WebChatUser darkMode={darkMode} />} />
+                        <Route path="/chat/user/mobile" element={<MobileChatUser darkMode={darkMode} />} />
+                        <Route path="/chat/programmer/web" element={<WebChat darkMode={darkMode} />} />
+                        <Route path="/chat/programmer/mobile" element={<MobileChat darkMode={darkMode} />} />
                     </Routes>
                 </main>
             </div>
