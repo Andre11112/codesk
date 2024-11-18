@@ -4,27 +4,43 @@ const pool = require('../db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-// Ruta de registro
+
+
+// Ruta de registro para usuarios
 router.post('/register', async (req, res) => {
-  const { email, password, firstName, lastName } = req.body; 
+  const { email, password, firstName, lastName } = req.body;
+
+  // Validar que todos los campos estén presentes
+  if (!email || !password || !firstName || !lastName) {
+    return res.status(400).json({ error: 'Todos los campos son obligatorios' });
+  }
+
   try {
-    // Verificar si el correo ya existe
+    // Verificar si el usuario ya existe
     const existingUser = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
     if (existingUser.rows.length > 0) {
-      return res.status(400).json({ error: 'El usuario ya existe' }); // Error si el usuario ya existe
+      return res.status(400).json({ error: 'El correo electrónico ya está en uso' });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10); 
+    // Hashear la contraseña
+    const password_hash = await bcrypt.hash(password, 10);
+
+    // Insertar el nuevo usuario en la base de datos
     const result = await pool.query(
-      'INSERT INTO users (email, password_hash, first_name, last_name) VALUES ($1, $2, $3, $4) RETURNING *', 
-      [email, hashedPassword, firstName, lastName] 
+      'INSERT INTO users (first_name, last_name, email, password_hash) VALUES ($1, $2, $3, $4) RETURNING *',
+      [firstName, lastName, email, password_hash]
     );
-    res.status(200).json({ message: 'Registro exitoso', user: result.rows[0] });
+
+    console.log('Usuario registrado:', result.rows[0]);
+
+    // Responder con éxito
+    res.status(201).json({ message: 'Registro exitoso', user: result.rows[0] });
   } catch (error) {
-    console.error('Error al registrar:', error);
+    console.error('Error al registrar usuario:', error);
     res.status(500).json({ error: 'Error al registrar usuario' });
   }
 });
+
 
 // Ruta de inicio de sesión
 router.post('/login', async (req, res) => {
@@ -162,8 +178,5 @@ router.put('/update/status', async (req, res) => {
     res.status(500).json({ error: 'Error al actualizar el estado' });
   }
 });
-
-
-
 
 module.exports = router;

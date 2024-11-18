@@ -16,7 +16,6 @@ import imagen16 from'../assets/images/16.png';
 import imagen17 from'../assets/images/17.png';
 
 
-
 const Home = ({ darkMode, toggleDarkMode }) => {
   return (
     <div className={darkMode ? 'dark-mode' : ''}>
@@ -25,7 +24,7 @@ const Home = ({ darkMode, toggleDarkMode }) => {
           <img src={imagen1} className="logo-image" onClick={toggleDarkMode} style={{cursor: 'pointer'}} alt="Logo" />
           <nav className={`space-x-8 font-semibold ${darkMode ? 'text-white' : 'text-black'}`}>
             <a href="#" className={`hover:${darkMode ? 'text-gray-300' : 'text-gray-900'}`}>Inicio</a>
-            <a href="/conocenos" className={`hover:${darkMode ? 'text-white-300' : 'text-gray-900'}`}>Conocenos</a>
+            <a href="/Conocenos" className={`hover:${darkMode ? 'text-white-300' : 'text-gray-900'}`}>Conocenos</a>
             <a href="#" className={`hover:${darkMode ? 'text-gray-300' : 'text-gray-900'}`}>Trabajos</a>
             <a href="#" className={`hover:${darkMode ? 'text-gray-300' : 'text-gray-900'}`}>Contactanos</a>
           </nav>
