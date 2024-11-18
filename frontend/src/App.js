@@ -16,7 +16,7 @@ import MobileChatUser from './components/MobileChatUser';
 function AppContent() {
     const location = useLocation();
     const hideHeaderRoutes = ['/login', '/register', '/select-project', '/chat/mobile', '/chat/web','/chat/user/web','/chat/user/mobile','/typeprogrammer','/Conocenos','/'];
-    const hideFooterRoutes = [ '/select-project','/typeprogrammer','/chat/web','/chat/mobilechat','/chat/programmer/web','/chat/programmer/mobile'];
+    const hideFooterRoutes = [ '/select-project','/typeprogrammer','/chat/web','/chat/mobilechat','/chat/user/web','/chat/user/mobile ','/chat/programmer/web','/chat/programmer/mobile'];
     const [darkMode, setDarkMode] = useState(localStorage.getItem('darkMode') === 'true');
 
     useEffect(() => {

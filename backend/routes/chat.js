@@ -3,10 +3,6 @@ const pool = require('../db');
 
 const router = express.Router();
 
-
-
-
-
 // Ruta para obtener el historial del chat
 router.get('/history/:chatId', async (req, res) => {
     try {

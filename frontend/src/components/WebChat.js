@@ -6,7 +6,7 @@ const WebChat = () => {
     const [programmers, setProgrammers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [messages, setMessages] = useState([]);
+    const [messages, setMessages] = useState({});
     const [newMessage, setNewMessage] = useState('');
     const [selectedProgrammer, setSelectedProgrammer] = useState(null);
     const chatMessagesRef = useRef(null);
@@ -69,7 +69,10 @@ const WebChat = () => {
                 }
 
                 const newMessageData = await response.json();
-                setMessages(prev => [...prev, newMessageData]);
+                setMessages(prev => ({
+                    ...prev,
+                    [selectedProgrammer.id]: [...(prev[selectedProgrammer.id] || []), newMessageData]
+                }));
                 setNewMessage('');
 
                 await fetch(`/api/chat/status/${chatId}`, {
@@ -97,6 +100,7 @@ const WebChat = () => {
 
     const handleProgrammerSelect = (programmer) => {
         setSelectedProgrammer(programmer);
+        // Aquí puedes cargar el historial del chat si es necesario
     };
 
     return (
@@ -146,7 +150,7 @@ const WebChat = () => {
                     ref={chatMessagesRef}
                     className="flex-1 overflow-y-auto p-4 space-y-4"
                 >
-                    {messages.map((msg, index) => (
+                    {selectedProgrammer && messages[selectedProgrammer.id] && messages[selectedProgrammer.id].map((msg, index) => (
                         <div 
                             key={index} 
                             className="flex flex-col max-w-[80%] ml-auto bg-blue-500 text-white rounded-lg p-3"

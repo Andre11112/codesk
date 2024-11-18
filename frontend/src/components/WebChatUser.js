@@ -7,7 +7,7 @@ const WebChatUser = () => {
     const [programmers, setProgrammers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [messages, setMessages] = useState([]);
+    const [messages, setMessages] = useState({});
     const [newMessage, setNewMessage] = useState('');
     const [selectedProgrammer, setSelectedProgrammer] = useState(null);
     const chatMessagesRef = useRef(null);
@@ -68,21 +68,24 @@ const WebChatUser = () => {
             setSelectedProgrammer(programmer);
 
             // Cargar historial del chat
-            await loadChatHistory(data.chat_id);
+            await loadChatHistory(data.chat_id, programmer.id);
         } catch (error) {
             console.error('Error al iniciar el chat:', error);
             setError('Error al iniciar el chat. Por favor, intente nuevamente.');
         }
     };
 
-    const loadChatHistory = async (chatId) => {
+    const loadChatHistory = async (chatId, programmerId) => {
         try {
             const response = await fetch(`/api/chat/history/${chatId}`);
             if (!response.ok) {
                 throw new Error('Error al cargar el historial');
             }
             const history = await response.json();
-            setMessages(history);
+            setMessages(prevMessages => ({
+                ...prevMessages,
+                [programmerId]: [...(prevMessages[programmerId] || []), ...history]
+            }));
         } catch (error) {
             console.error('Error al cargar historial:', error);
             setError('Error al cargar el historial del chat');
@@ -120,7 +123,10 @@ const WebChatUser = () => {
             }
 
             const newMessageData = await response.json();
-            setMessages(prev => [...prev, newMessageData]);
+            setMessages(prev => ({
+                ...prev,
+                [selectedProgrammer.id]: [...(prev[selectedProgrammer.id] || []), newMessageData]
+            }));
             setNewMessage('');
 
             // Actualizar last_message_at
@@ -187,7 +193,6 @@ const WebChatUser = () => {
                 )}
             </div>
 
-            {/* Nueva área de chat */}
             <div className="flex-1 flex flex-col">
                 <div className="p-4 border-b bg-white shadow">
                     <h3 className="text-lg font-semibold">
@@ -199,7 +204,7 @@ const WebChatUser = () => {
                     ref={chatMessagesRef}
                     className="flex-1 overflow-y-auto p-4 space-y-4"
                 >
-                    {messages.map((msg, index) => (
+                    {selectedProgrammer && messages[selectedProgrammer.id] && messages[selectedProgrammer.id].map((msg, index) => (
                         <div 
                             key={index} 
                             className={`flex flex-col max-w-[80%] ${

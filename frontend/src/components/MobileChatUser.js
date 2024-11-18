@@ -7,7 +7,7 @@ const MobileChatUser = () => {
     const [programmers, setProgrammers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [messages, setMessages] = useState([]);
+    const [messages, setMessages] = useState({});
     const [newMessage, setNewMessage] = useState('');
     const [selectedProgrammer, setSelectedProgrammer] = useState(null);
     const chatMessagesRef = useRef(null);
@@ -69,21 +69,24 @@ const MobileChatUser = () => {
             setSelectedProgrammer(programmer);
     
             // Cargar historial del chat
-            await loadChatHistory(data.chat_id);
+            await loadChatHistory(data.chat_id, programmer.id);
         } catch (error) {
             console.error('Error al iniciar el chat:', error);
             setError('Error al iniciar el chat. Por favor, intente nuevamente.');
         }
     };
     
-    const loadChatHistory = async (chatId) => {
+    const loadChatHistory = async (chatId, programmerId) => {
         try {
             const response = await fetch(`/api/chat/history/${chatId}`);
             if (!response.ok) {
                 throw new Error('Error al cargar el historial');
             }
             const history = await response.json();
-            setMessages(history);
+            setMessages(prevMessages => ({
+                ...prevMessages,
+                [programmerId]: [...(prevMessages[programmerId] || []), ...history] // Agregar nuevos mensajes al historial existente
+            }));
         } catch (error) {
             console.error('Error al cargar historial:', error);
             setError('Error al cargar el historial del chat');
@@ -121,7 +124,10 @@ const MobileChatUser = () => {
             }
     
             const newMessageData = await response.json();
-            setMessages(prev => [...prev, newMessageData]);
+            setMessages(prevMessages => ({
+                ...prevMessages,
+                [selectedProgrammer.id]: [...(prevMessages[selectedProgrammer.id] || []), newMessageData] // Agregar el nuevo mensaje al historial del programador
+            }));
             setNewMessage('');
     
             // Actualizar last_message_at
@@ -200,7 +206,7 @@ const MobileChatUser = () => {
                     ref={chatMessagesRef}
                     className="flex-1 overflow-y-auto p-4 space-y-4"
                 >
-                    {messages.map((msg, index) => (
+                    {selectedProgrammer && messages[selectedProgrammer.id] && messages[selectedProgrammer.id].map((msg, index) => (
                         <div 
                             key={index} 
                             className={`flex flex-col max-w-[80%] ${

@@ -6,7 +6,7 @@ const MobileChat = () => {
     const [programmers, setProgrammers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [messages, setMessages] = useState([]);
+    const [messages, setMessages] = useState({});
     const [newMessage, setNewMessage] = useState('');
     const [selectedProgrammer, setSelectedProgrammer] = useState(null);
     const chatMessagesRef = useRef(null);
@@ -69,7 +69,10 @@ const MobileChat = () => {
                 }
 
                 const newMessageData = await response.json();
-                setMessages(prev => [...prev, newMessageData]);
+                setMessages(prev => ({
+                    ...prev,
+                    [selectedProgrammer.id]: [...(prev[selectedProgrammer.id] || []), newMessageData]
+                }));
                 setNewMessage('');
 
                 // Actualizar estado del chat
@@ -98,6 +101,7 @@ const MobileChat = () => {
 
     const handleProgrammerSelect = (programmer) => {
         setSelectedProgrammer(programmer);
+        // Aquí puedes cargar el historial del chat si es necesario
     };
 
     return (
@@ -149,7 +153,7 @@ const MobileChat = () => {
                     ref={chatMessagesRef}
                     className="flex-1 overflow-y-auto p-4 space-y-4"
                 >
-                    {messages.map((msg, index) => (
+                    {selectedProgrammer && messages[selectedProgrammer.id] && messages[selectedProgrammer.id].map((msg, index) => (
                         <div 
                             key={index} 
                             className={`flex flex-col max-w-[80%] ${
