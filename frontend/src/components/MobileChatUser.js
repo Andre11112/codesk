@@ -41,7 +41,26 @@ const MobileChatUser = () => {
         }
     }, [messages]);
 
+    const loadChatHistory = async (chatId, programmerId) => {
+        try {
+            const response = await fetch(`/api/chat/history/${chatId}`);
+            if (!response.ok) {
+                throw new Error('Error al cargar el historial');
+            }
+            const history = await response.json();
+            setMessages(prevMessages => ({
+                ...prevMessages,
+                [programmerId]: [...(prevMessages[programmerId] || []), ...history]
+            }));
+        } catch (error) {
+            console.error('Error al cargar historial:', error);
+            setError('Error al cargar el historial del chat');
+        }
+    };
+    
     const handleProgrammerSelect = async (programmer) => {
+        setSelectedProgrammer(programmer);
+        
         try {
             const userId = localStorage.getItem('userId');
             if (!userId) {
@@ -66,30 +85,12 @@ const MobileChatUser = () => {
     
             const data = await response.json();
             localStorage.setItem('currentChatId', data.chat_id.toString());
-            setSelectedProgrammer(programmer);
     
             // Cargar historial del chat
             await loadChatHistory(data.chat_id, programmer.id);
         } catch (error) {
             console.error('Error al iniciar el chat:', error);
             setError('Error al iniciar el chat. Por favor, intente nuevamente.');
-        }
-    };
-    
-    const loadChatHistory = async (chatId, programmerId) => {
-        try {
-            const response = await fetch(`/api/chat/history/${chatId}`);
-            if (!response.ok) {
-                throw new Error('Error al cargar el historial');
-            }
-            const history = await response.json();
-            setMessages(prevMessages => ({
-                ...prevMessages,
-                [programmerId]: [...(prevMessages[programmerId] || []), ...history] // Agregar nuevos mensajes al historial existente
-            }));
-        } catch (error) {
-            console.error('Error al cargar historial:', error);
-            setError('Error al cargar el historial del chat');
         }
     };
     
@@ -124,9 +125,9 @@ const MobileChatUser = () => {
             }
     
             const newMessageData = await response.json();
-            setMessages(prevMessages => ({
-                ...prevMessages,
-                [selectedProgrammer.id]: [...(prevMessages[selectedProgrammer.id] || []), newMessageData] // Agregar el nuevo mensaje al historial del programador
+            setMessages(prev => ({
+                ...prev,
+                [selectedProgrammer.id]: [...(prev[selectedProgrammer.id] || []), newMessageData]
             }));
             setNewMessage('');
     

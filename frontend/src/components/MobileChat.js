@@ -4,18 +4,37 @@ import '../styles/chat.css';
 
 const MobileChat = () => {
     const [programmers, setProgrammers] = useState([]);
+    const [activeChats, setActiveChats] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [messages, setMessages] = useState({});
     const [newMessage, setNewMessage] = useState('');
     const [selectedProgrammer, setSelectedProgrammer] = useState(null);
     const chatMessagesRef = useRef(null);
+    const ws = useRef(null);
+
+    useEffect(() => {
+        ws.current = new WebSocket('ws://localhost:8080');
+
+        ws.current.onmessage = (event) => {
+            const message = JSON.parse(event.data);
+            setMessages((prevMessages) => ({
+                ...prevMessages,
+                [message.sender_id]: [...(prevMessages[message.sender_id] || []), message],
+            }));
+            setActiveChats((prev) => [...new Set([...prev, message.sender_id])]);
+        };
+
+        return () => {
+            ws.current.close();
+        };
+    }, []);
 
     const getMobileUsers = useCallback(async () => {
         try {
             setLoading(true);
             setError(null);
-            const response = await fetch('/api/users/mobile'); // Obtener usuarios móviles
+            const response = await fetch('/api/users/mobile');
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -39,78 +58,112 @@ const MobileChat = () => {
         }
     }, [messages]);
 
-    const handleSendMessage = useCallback(async (messageText) => {
-        if (messageText.trim() && selectedProgrammer) {
-            const userId = localStorage.getItem('userId');
-            const chatId = localStorage.getItem('currentChatId');
+    const loadChatHistory = async (chatId) => {
+        if (!selectedProgrammer) return;
 
-            if (!chatId || !userId) {
-                console.error('Falta información necesaria para enviar el mensaje');
-                return;
+        try {
+            const response = await fetch(`/api/chat/history/${chatId}`);
+            if (!response.ok) {
+                throw new Error('Error al cargar el historial');
             }
-
-            try {
-                const response = await fetch('/api/messages', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        chat_id: parseInt(chatId),
-                        sender_id: parseInt(userId),
-                        sender_type: 'user',
-                        message_text: messageText,
-                    }),
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error || 'Error al enviar el mensaje');
-                }
-
-                const newMessageData = await response.json();
-                setMessages(prev => ({
-                    ...prev,
-                    [selectedProgrammer.id]: [...(prev[selectedProgrammer.id] || []), newMessageData]
-                }));
-                setNewMessage('');
-
-                // Actualizar estado del chat
-                await fetch(`/api/chat/status/${chatId}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        status: 'active'
-                    })
-                });
-            } catch (error) {
-                console.error('Error al enviar el mensaje:', error);
-                setError('Error al enviar el mensaje. Por favor, intente nuevamente.');
-            }
+            const history = await response.json();
+            setMessages(prevMessages => ({
+                ...prevMessages,
+                [selectedProgrammer.id]: [...(prevMessages[selectedProgrammer.id] || []), ...history]
+            }));
+        } catch (error) {
+            console.error('Error al cargar historial:', error);
+            setError('Error al cargar el historial del chat');
         }
-    }, [selectedProgrammer]);
+    };
+
+    const handleSendMessage = async () => {
+        if (!newMessage.trim() || !selectedProgrammer) return;
+
+        const userId = localStorage.getItem('userId');
+        const chatId = localStorage.getItem('currentChatId');
+
+        if (!chatId || !userId) {
+            console.error('Falta información necesaria para enviar el mensaje');
+            return;
+        }
+
+        const messageData = {
+            chat_id: parseInt(chatId),
+            sender_id: parseInt(userId),
+            sender_type: 'user',
+            message_text: newMessage,
+        };
+
+        ws.current.send(JSON.stringify(messageData));
+
+        setMessages((prevMessages) => ({
+            ...prevMessages,
+            [selectedProgrammer.id]: [...(prevMessages[selectedProgrammer.id] || []), messageData],
+        }));
+        setNewMessage('');
+    };
 
     const handleKeyPress = (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
-            handleSendMessage(newMessage);
+            handleSendMessage();
         }
     };
 
-    const handleProgrammerSelect = (programmer) => {
+    const handleProgrammerSelect = async (programmer) => {
         setSelectedProgrammer(programmer);
-        // Aquí puedes cargar el historial del chat si es necesario
+        
+        try {
+            const userId = localStorage.getItem('userId');
+            if (!userId) {
+                setError('Error: Usuario no identificado');
+                return;
+            }
+
+            const response = await fetch('/api/chat/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    user_id: parseInt(userId),
+                    programmer_id: programmer.id
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al crear el chat');
+            }
+
+            const data = await response.json();
+            localStorage.setItem('currentChatId', data.chat_id.toString());
+
+            await loadChatHistory(data.chat_id);
+        } catch (error) {
+            console.error('Error al iniciar el chat:', error);
+            setError('Error al iniciar el chat. Por favor, intente nuevamente.');
+        }
     };
 
     return (
         <div className="flex h-screen bg-gray-100">
-            <div className="w-full bg-white shadow-lg overflow-y-auto">
+            <div className="w-1/4 bg-white shadow-lg overflow-y-auto">
                 <div className="p-4 border-b">
                     <h2 className="text-xl font-bold">Usuarios Móviles</h2>
                 </div>
-                
+                <div className="p-4 border-b">
+                    <h2 className="text-xl font-bold">Chats Activos</h2>
+                    {activeChats.length === 0 ? (
+                        <p>No hay chats activos.</p>
+                    ) : (
+                        activeChats.map(chatId => (
+                            <div key={chatId} className="p-2 border rounded-lg">
+                                <p>Chat con Programador ID: {chatId}</p>
+                            </div>
+                        ))
+                    )}
+                </div>
                 {error && (
                     <Alert variant="destructive" className="m-4">
                         <AlertDescription>{error}</AlertDescription>
@@ -182,7 +235,7 @@ const MobileChat = () => {
                             disabled={!selectedProgrammer}
                         />
                         <button
-                            onClick={() => handleSendMessage(newMessage)}
+                            onClick={() => handleSendMessage()}
                             className={`px-6 py-2 rounded-lg transition-colors ${
                                 selectedProgrammer 
                                     ? 'bg-blue-500 hover:bg-blue-600 text-white' 
