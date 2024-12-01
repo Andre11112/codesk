@@ -12,6 +12,7 @@ import './styles/darkMode.css';
 import Conocenos from './components/Conocenos';
 import WebChatUser from './components/WebChatUser';
 import MobileChatUser from './components/MobileChatUser';
+import ProjectDetails from './components/ProjectDetails';
 
 function AppContent() {
     const location = useLocation();
@@ -59,6 +60,7 @@ function AppContent() {
                         <Route path="/chat/user/mobile" element={<MobileChatUser darkMode={darkMode} />} />
                         <Route path="/chat/programmer/web" element={<WebChat darkMode={darkMode} />} />
                         <Route path="/chat/programmer/mobile" element={<MobileChat darkMode={darkMode} />} />
+                        <Route path="/project-details" element={<ProjectDetails />} />
                     </Routes>
                 </main>
             </div>
