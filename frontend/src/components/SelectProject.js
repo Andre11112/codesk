@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ProjectDetails from './ProjectDetails';
+import ProjectDetails from './ProjectDetailsMovil';
 import '../styles/SelectProject.css';
 import backgroundImage from '../assets/images/30.png';
 
@@ -27,6 +27,7 @@ const SelectProject = () => {
     }, [navigate]);
 
     const handleSelection = async (type) => {
+        setSelectedType(type);
         const token = localStorage.getItem('token');
         const userId = localStorage.getItem('userId');
         
@@ -34,12 +35,6 @@ const SelectProject = () => {
         setError(null);
 
         try {
-            console.log('Iniciando selección de proyecto:', {
-                userId,
-                type,
-                token: !!token
-            });
-
             const projectType = type === 'mobile' ? 1 : 2;
             
             const response = await fetch('/api/users/update-project-type', {
@@ -54,20 +49,20 @@ const SelectProject = () => {
                 })
             });
 
-            const data = await response.json();
-            console.log('Respuesta del servidor:', data);
-
             if (!response.ok) {
-                throw new Error(data.message || 'Error al actualizar el tipo de proyecto');
+                throw new Error('Error al actualizar el tipo de proyecto');
             }
 
             localStorage.setItem('projectType', projectType.toString());
-            setSelectedType(type);
             
-            navigate(type === 'mobile' ? '/chat/user/mobile' : '/chat/user/web');
+            if (type === 'mobile') {
+                navigate('/project-details-mobile');
+            } else {
+                navigate('/project-details-web');
+            }
 
         } catch (error) {
-            console.error('Error en la selección:', error);
+            console.error('Error:', error);
             setError(error.message);
         } finally {
             setIsLoading(false);

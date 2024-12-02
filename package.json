@@ -12,6 +12,10 @@
     "concurrently": "^6.2.0"
   },
   "dependencies": {
-    "all": "^0.0.0"
+    "@types/node": "^22.10.1",
+    "@types/react": "^18.3.12",
+    "all": "^0.0.0",
+    "lucide-react": "^0.462.0",
+    "typescript": "^5.7.2"
   }
 }

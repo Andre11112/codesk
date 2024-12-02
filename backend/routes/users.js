@@ -109,5 +109,57 @@ router.put('/update-project-type', async (req, res) => {
     }
 });
 
+// Rutas para los planes de usuario
+router.post('/user-plans', async (req, res) => {
+    const { user_id, plan_type } = req.body;
+
+    try {
+        const result = await pool.query(
+            'INSERT INTO user_plans (user_id, plan_type) VALUES ($1, $2) RETURNING *',
+            [user_id, plan_type]
+        );
+
+        res.status(201).json({
+            message: 'Plan añadido exitosamente',
+            plan: result.rows[0]
+        });
+    } catch (error) {
+        console.error('Error al añadir el plan:', error);
+        res.status(500).json({
+            error: 'Error del servidor',
+            message: 'No se pudo añadir el plan'
+        });
+    }
+});
+// Ruta para registrar el pago del plan
+router.put('/user-plans/:id/pay', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const result = await pool.query(
+            'UPDATE user_plans SET is_paid = TRUE, paid_at = NOW() WHERE id = $1 RETURNING *',
+            [id]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({
+                error: 'Plan no encontrado',
+                message: 'No se encontró el plan con el ID proporcionado'
+            });
+        }
+
+        res.json({
+            message: 'Pago registrado exitosamente',
+            plan: result.rows[0]
+        });
+    } catch (error) {
+        console.error('Error al registrar el pago:', error);
+        res.status(500).json({
+            error: 'Error del servidor',
+            message: 'No se pudo registrar el pago'
+        });
+    }
+});
+
 module.exports = router;
 
