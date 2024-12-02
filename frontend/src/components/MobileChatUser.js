@@ -7,7 +7,7 @@ const MobileChatUser = () => {
     const [programmers, setProgrammers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [messages, setMessages] = useState([]);
+    const [messages, setMessages] = useState({});
     const [newMessage, setNewMessage] = useState('');
     const [selectedProgrammer, setSelectedProgrammer] = useState(null);
     const chatMessagesRef = useRef(null);
@@ -41,7 +41,26 @@ const MobileChatUser = () => {
         }
     }, [messages]);
 
+    const loadChatHistory = async (chatId, programmerId) => {
+        try {
+            const response = await fetch(`/api/chat/history/${chatId}`);
+            if (!response.ok) {
+                throw new Error('Error al cargar el historial');
+            }
+            const history = await response.json();
+            setMessages(prevMessages => ({
+                ...prevMessages,
+                [programmerId]: [...(prevMessages[programmerId] || []), ...history]
+            }));
+        } catch (error) {
+            console.error('Error al cargar historial:', error);
+            setError('Error al cargar el historial del chat');
+        }
+    };
+    
     const handleProgrammerSelect = async (programmer) => {
+        setSelectedProgrammer(programmer);
+        
         try {
             const userId = localStorage.getItem('userId');
             if (!userId) {
@@ -66,27 +85,12 @@ const MobileChatUser = () => {
     
             const data = await response.json();
             localStorage.setItem('currentChatId', data.chat_id.toString());
-            setSelectedProgrammer(programmer);
     
             // Cargar historial del chat
-            await loadChatHistory(data.chat_id);
+            await loadChatHistory(data.chat_id, programmer.id);
         } catch (error) {
             console.error('Error al iniciar el chat:', error);
             setError('Error al iniciar el chat. Por favor, intente nuevamente.');
-        }
-    };
-    
-    const loadChatHistory = async (chatId) => {
-        try {
-            const response = await fetch(`/api/chat/history/${chatId}`);
-            if (!response.ok) {
-                throw new Error('Error al cargar el historial');
-            }
-            const history = await response.json();
-            setMessages(history);
-        } catch (error) {
-            console.error('Error al cargar historial:', error);
-            setError('Error al cargar el historial del chat');
         }
     };
     
@@ -121,7 +125,10 @@ const MobileChatUser = () => {
             }
     
             const newMessageData = await response.json();
-            setMessages(prev => [...prev, newMessageData]);
+            setMessages(prev => ({
+                ...prev,
+                [selectedProgrammer.id]: [...(prev[selectedProgrammer.id] || []), newMessageData]
+            }));
             setNewMessage('');
     
             // Actualizar last_message_at
@@ -200,7 +207,7 @@ const MobileChatUser = () => {
                     ref={chatMessagesRef}
                     className="flex-1 overflow-y-auto p-4 space-y-4"
                 >
-                    {messages.map((msg, index) => (
+                    {selectedProgrammer && messages[selectedProgrammer.id] && messages[selectedProgrammer.id].map((msg, index) => (
                         <div 
                             key={index} 
                             className={`flex flex-col max-w-[80%] ${

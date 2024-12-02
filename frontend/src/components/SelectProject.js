@@ -1,26 +1,47 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ProjectDetails from './ProjectDetailsMovil';
 import '../styles/SelectProject.css';
 import backgroundImage from '../assets/images/30.png';
 
 const SelectProject = () => {
     const navigate = useNavigate();
-    const userId = localStorage.getItem('userId');
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [selectedType, setSelectedType] = useState(null);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        const userId = localStorage.getItem('userId');
+        
+        console.log('Estado de autenticación:', {
+            token: !!token,
+            userId: userId,
+            tipoUserId: typeof userId
+        });
+
+        if (!token || !userId) {
+            console.log('No hay sesión activa');
+            navigate('/login');
+        }
+    }, [navigate]);
 
     const handleSelection = async (type) => {
-        if (!userId) {
-            alert('Por favor, inicia sesión primero');
-            navigate('/login');
-            return;
-        }
-
-        const projectType = type === 'mobile' ? 1 : 2;
+        setSelectedType(type);
+        const token = localStorage.getItem('token');
+        const userId = localStorage.getItem('userId');
+        
+        setIsLoading(true);
+        setError(null);
 
         try {
+            const projectType = type === 'mobile' ? 1 : 2;
+            
             const response = await fetch('/api/users/update-project-type', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({
                     userId: parseInt(userId),
@@ -29,19 +50,22 @@ const SelectProject = () => {
             });
 
             if (!response.ok) {
-                const errorData = await response.text();
-                console.error('Error al actualizar el tipo de proyecto:', errorData);
                 throw new Error('Error al actualizar el tipo de proyecto');
             }
 
-            const data = await response.json();
-            console.log('Respuesta del servidor:', data);
-            
             localStorage.setItem('projectType', projectType.toString());
-            navigate(type === 'mobile' ? '/chat/user/mobile' : '/chat/user/web');
+            
+            if (type === 'mobile') {
+                navigate('/project-details-mobile');
+            } else {
+                navigate('/project-details-web');
+            }
+
         } catch (error) {
             console.error('Error:', error);
-            alert('Error al seleccionar el tipo de proyecto: ' + error.message);
+            setError(error.message);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -49,20 +73,31 @@ const SelectProject = () => {
         <div className="select-project-wrapper" style={{backgroundImage: `url(${backgroundImage})`}}>
             <div className="select-project-container">
                 <h2>¿Qué tipo de proyecto quieres trabajar?</h2>
+                
+                {error && (
+                    <div className="error-message">
+                        {error}
+                    </div>
+                )}
+
                 <div className="buttons">
                     <button 
                         onClick={() => handleSelection('mobile')} 
-                        className="button mobile"
+                        className={`button mobile ${selectedType === 'mobile' ? 'selected' : ''}`}
+                        disabled={isLoading}
                     >
-                        Aplicación Móvil
+                        {isLoading ? 'Cargando...' : 'Aplicación Móvil'}
                     </button>
                     <button 
                         onClick={() => handleSelection('web')} 
-                        className="button web"
+                        className={`button web ${selectedType === 'web' ? 'selected' : ''}`}
+                        disabled={isLoading}
                     >
-                        Aplicación Web
+                        {isLoading ? 'Cargando...' : 'Aplicación Web'}
                     </button>
                 </div>
+
+                {selectedType && <ProjectDetails projectType={selectedType} />}
             </div>
         </div>
     );

@@ -7,7 +7,7 @@ const WebChatUser = () => {
     const [programmers, setProgrammers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [messages, setMessages] = useState([]);
+    const [messages, setMessages] = useState({});
     const [newMessage, setNewMessage] = useState('');
     const [selectedProgrammer, setSelectedProgrammer] = useState(null);
     const chatMessagesRef = useRef(null);
@@ -40,39 +40,114 @@ const WebChatUser = () => {
         }
     }, [messages]);
 
-    const handleSendMessage = useCallback(async (messageText) => {
-        if (messageText.trim() && selectedProgrammer) {
+    const handleProgrammerSelect = async (programmer) => {
+        try {
             const userId = localStorage.getItem('userId');
-            try {
-                const response = await fetch('/api/messages', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        programmer_id: selectedProgrammer.id,
-                        user_id: userId,
-                        sender_type: 'user',
-                        message_text: messageText,
-                    }),
-                });
-
-                if (!response.ok) {
-                    throw new Error('Error al enviar el mensaje');
-                }
-
-                const newMessage = await response.json();
-                setMessages(prev => [...prev, newMessage]);
-                setNewMessage('');
-            } catch (error) {
-                console.error('Error al enviar el mensaje:', error);
+            if (!userId) {
+                setError('Error: Usuario no identificado');
+                return;
             }
+
+            const response = await fetch('/api/chat/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    user_id: parseInt(userId),
+                    programmer_id: programmer.id
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al crear el chat');
+            }
+
+            const data = await response.json();
+            localStorage.setItem('currentChatId', data.chat_id.toString());
+            setSelectedProgrammer(programmer);
+
+            // Cargar historial del chat
+            await loadChatHistory(data.chat_id, programmer.id);
+        } catch (error) {
+            console.error('Error al iniciar el chat:', error);
+            setError('Error al iniciar el chat. Por favor, intente nuevamente.');
         }
-    }, [selectedProgrammer]);
+    };
+
+    const loadChatHistory = async (chatId, programmerId) => {
+        try {
+            const response = await fetch(`/api/chat/history/${chatId}`);
+            if (!response.ok) {
+                throw new Error('Error al cargar el historial');
+            }
+            const history = await response.json();
+            setMessages(prevMessages => ({
+                ...prevMessages,
+                [programmerId]: [...(prevMessages[programmerId] || []), ...history]
+            }));
+        } catch (error) {
+            console.error('Error al cargar historial:', error);
+            setError('Error al cargar el historial del chat');
+        }
+    };
+
+    const handleSendMessage = async () => {
+        if (!newMessage.trim() || !selectedProgrammer) return;
+
+        const userId = localStorage.getItem('userId');
+        const chatId = localStorage.getItem('currentChatId');
+
+        if (!chatId || !userId) {
+            console.error('Falta información necesaria para enviar el mensaje');
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/messages', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: parseInt(chatId),
+                    sender_id: parseInt(userId),
+                    sender_type: 'user',
+                    message_text: newMessage,
+                }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Error al enviar el mensaje');
+            }
+
+            const newMessageData = await response.json();
+            setMessages(prev => ({
+                ...prev,
+                [selectedProgrammer.id]: [...(prev[selectedProgrammer.id] || []), newMessageData]
+            }));
+            setNewMessage('');
+
+            // Actualizar last_message_at
+            await fetch(`/api/chat/status/${chatId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    status: 'active'
+                })
+            });
+        } catch (error) {
+            console.error('Error al enviar el mensaje:', error);
+            setError('Error al enviar el mensaje. Por favor, intente nuevamente.');
+        }
+    };
 
     const handleKeyPress = (e) => {
         if (e.key === 'Enter') {
-            handleSendMessage(newMessage);
+            handleSendMessage();
         }
     };
 
@@ -106,7 +181,7 @@ const WebChatUser = () => {
                                         ? 'bg-blue-50 border-blue-500' 
                                         : 'hover:bg-gray-50'
                                 }`}
-                                onClick={() => setSelectedProgrammer(programmer)}
+                                onClick={() => handleProgrammerSelect(programmer)}
                             >
                                 <h3 className="font-medium">
                                     {programmer.first_name} {programmer.last_name}
@@ -118,9 +193,52 @@ const WebChatUser = () => {
                 )}
             </div>
 
-            {/* Área de chat */}
             <div className="flex-1 flex flex-col">
-                {/* ... (resto del código del área de chat igual que en WebChat) ... */}
+                <div className="p-4 border-b bg-white shadow">
+                    <h3 className="text-lg font-semibold">
+                        {selectedProgrammer ? `Conversación con ${selectedProgrammer.first_name} ${selectedProgrammer.last_name}` : 'Selecciona un programador para chatear'}
+                    </h3>
+                </div>
+
+                <div 
+                    ref={chatMessagesRef}
+                    className="flex-1 overflow-y-auto p-4 space-y-4"
+                >
+                    {selectedProgrammer && messages[selectedProgrammer.id] && messages[selectedProgrammer.id].map((msg, index) => (
+                        <div 
+                            key={index} 
+                            className={`flex flex-col max-w-[80%] ${
+                                msg.sender_type === 'user' 
+                                    ? 'ml-auto bg-blue-500 text-white' 
+                                    : 'mr-auto bg-gray-200'
+                            } rounded-lg p-3`}
+                        >
+                            <p className="break-words">{msg.message_text}</p>
+                            <span className="text-xs opacity-75 ml-auto mt-1">
+                                {new Date(msg.sent_at).toLocaleTimeString()}
+                            </span>
+                        </div>
+                    ))}
+                </div>
+
+                <div className="p-4 bg-white border-t">
+                    <div className="flex gap-2">
+                        <input
+                            type="text"
+                            className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="Escribe tu mensaje..."
+                            value={newMessage}
+                            onChange={(e) => setNewMessage(e.target.value)}
+                            onKeyPress={handleKeyPress}
+                        />
+                        <button
+                            onClick={handleSendMessage}
+                            className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+                        >
+                            Enviar
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     );

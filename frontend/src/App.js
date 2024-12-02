@@ -12,11 +12,17 @@ import './styles/darkMode.css';
 import Conocenos from './components/Conocenos';
 import WebChatUser from './components/WebChatUser';
 import MobileChatUser from './components/MobileChatUser';
+import ProjectDetailsMovil from './components/ProjectDetailsMovil';
+import ProjectDetailsWeb from './components/ProjectDetailsWeb';
+import Payment from './components/Payment';
 
 function AppContent() {
     const location = useLocation();
-    const hideHeaderRoutes = ['/login', '/register', '/select-project', '/chat/mobile', '/chat/web','/chat/user/web','/chat/user/mobile','/typeprogrammer','/Conocenos','/'];
-    const hideFooterRoutes = [ '/select-project','/typeprogrammer','/chat/web','/chat/mobilechat','/chat/programmer/web','/chat/programmer/mobile'];
+    const hideHeaderRoutes = ['/login', '/register', '/select-project', '/chat/mobile', '/chat/web',
+    '/chat/user/web','/chat/user/mobile','/typeprogrammer',
+    '/project-details-mobile','/project-details-web','/Conocenos','/payment'];
+    const hideFooterRoutes = [ '/select-project','/typeprogrammer','/chat/web',
+    '/chat/mobilechat','/chat/user/web','/chat/user/mobile ','/chat/programmer/web','/chat/programmer/mobile'];
     const [darkMode, setDarkMode] = useState(localStorage.getItem('darkMode') === 'true');
 
     useEffect(() => {
@@ -59,6 +65,9 @@ function AppContent() {
                         <Route path="/chat/user/mobile" element={<MobileChatUser darkMode={darkMode} />} />
                         <Route path="/chat/programmer/web" element={<WebChat darkMode={darkMode} />} />
                         <Route path="/chat/programmer/mobile" element={<MobileChat darkMode={darkMode} />} />
+                        <Route path="/project-details-mobile" element={<ProjectDetailsMovil projectType="mobile" />} />
+                        <Route path="/project-details-web" element={<ProjectDetailsWeb projectType="web" />} />
+                        <Route path="/payment" element={<Payment />} />
                     </Routes>
                 </main>
             </div>
