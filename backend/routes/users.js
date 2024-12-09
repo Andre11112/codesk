@@ -161,5 +161,22 @@ router.put('/user-plans/:id/pay', async (req, res) => {
     }
 });
 
+// Ejemplo de endpoint en Express.js
+router.post('/record-payment', async (req, res) => {
+    const { userId, email, card_number, country_or_region, planType } = req.body;
+
+    try {
+        await pool.query(
+            'INSERT INTO payments (user_id, email, card_number, country_or_region, plan_type, is_paid, created_at) VALUES ($1, $2, $3, $4, $5, $6, NOW())',
+            [userId, email, card_number, country_or_region, planType, true]
+        );
+
+        res.status(200).send('Pago registrado con éxito');
+    } catch (error) {
+        console.error('Error al registrar el pago:', error);
+        res.status(500).send('Error al registrar el pago');
+    }
+});
+
 module.exports = router;
 

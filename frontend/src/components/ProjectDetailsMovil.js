@@ -1,9 +1,10 @@
 import React from 'react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card"
 import { Button } from "./ui/button"
-import { Check } from 'lucide-react'
 import '../styles/ProjectDetails.css'
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 export default function ProjectDetailsMovil() {
   const navigate = useNavigate();
@@ -17,7 +18,8 @@ export default function ProjectDetailsMovil() {
         "Diseño Nativo Básico",
         "1 Desarrollador",
         "4 semanas de desarrollo",
-        "Soporte básico"
+        "Soporte básico",
+        "1 Revisión del proyecto"
       ]
     },
     {
@@ -28,7 +30,10 @@ export default function ProjectDetailsMovil() {
         "Diseño Nativo Avanzado",
         "2 Desarrolladores",
         "6 semanas de desarrollo",
-        "Soporte prioritario"
+        "Soporte prioritario",
+        "3 Revisiones del proyecto",
+        "Integración de API",
+        "Pruebas de usuario"
       ]
     },
     {
@@ -39,7 +44,11 @@ export default function ProjectDetailsMovil() {
         "Diseño Nativo Premium",
         "3 Desarrolladores",
         "8 semanas de desarrollo",
-        "Soporte 24/7"
+        "Soporte 24/7",
+        "Revisiones ilimitadas",
+        "Integración de API avanzada",
+        "Pruebas de usuario y rendimiento",
+        "Mantenimiento post-lanzamiento"
       ]
     }
   ];
@@ -47,6 +56,19 @@ export default function ProjectDetailsMovil() {
   const handleContract = async (planType) => {
     const userId = localStorage.getItem('userId');
     const token = localStorage.getItem('token');
+
+    // Mapeo de tipos de plan a projectType
+    const projectTypeMap = {
+        "PLAN BÁSICO": 1,
+        "PLAN MEDIUM": 1,
+        "PLAN MAXI": 1
+    };
+
+    const projectType = projectTypeMap[planType];
+
+    // Guardar detalles del plan en localStorage
+    const selectedPlan = plans.find(plan => plan.title === planType);
+    localStorage.setItem('selectedPlan', JSON.stringify(selectedPlan));
 
     try {
         const response = await fetch('/api/users/update-project-type', {
@@ -57,7 +79,7 @@ export default function ProjectDetailsMovil() {
             },
             body: JSON.stringify({
                 userId,
-                projectType: planType
+                projectType
             })
         });
 
@@ -88,7 +110,7 @@ export default function ProjectDetailsMovil() {
               <ul className="feature-list">
                 {plan.features.map((feature, featureIndex) => (
                   <li key={featureIndex} className="feature-item">
-                    <Check className="feature-icon" />
+                    <FontAwesomeIcon icon={faCheck} className="feature-icon" />
                     {feature}
                   </li>
                 ))}
