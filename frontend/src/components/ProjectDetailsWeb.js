@@ -1,7 +1,6 @@
 import React from 'react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card"
 import { Button } from "./ui/button"
-import { Check } from 'lucide-react'
 import '../styles/ProjectDetails.css'
 
 export default function ProjectDetailsWeb() {
