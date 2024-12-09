@@ -1,9 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card"
 import { Button } from "./ui/button"
 import '../styles/ProjectDetails.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 export default function ProjectDetailsWeb() {
+  const navigate = useNavigate();
+
   const plans = [
     {
       title: "PLAN BÁSICO",
@@ -12,9 +17,10 @@ export default function ProjectDetailsWeb() {
       monthlyPrice: "4,13€",
       features: [
         "1 Dominio Gratis primer año",
-        "Whois privado gratuito",
+        "2 desarrolladores",
         "2 sitios web",
-        "Sin límite de bases de datos"
+        "límite de bases de datos",
+        "Soporte básico"
       ]
     },
     {
@@ -24,9 +30,12 @@ export default function ProjectDetailsWeb() {
       monthlyPrice: "8,30€",
       features: [
         "1 Dominio Gratis primer año",
-        "Whois privado gratuito",
+        "3 desarrolladores",
         "Sin límite de sitios web",
-        "Sin límite de bases de datos"
+        "Sin límite de bases de datos",
+        "Soporte prioritario",
+        "3 Revisiones del proyecto",
+        "Integración de API"
       ]
     },
     {
@@ -36,12 +45,53 @@ export default function ProjectDetailsWeb() {
       monthlyPrice: "12,46€",
       features: [
         "1 Dominio Gratis primer año",
-        "Whois privado gratuito",
+        "4 desarrolladores",
         "Sin límite de sitios web",
-        "Sin límite de bases de datos"
+        "Sin límite de bases de datos",
+        "Soporte 24/7",
+        "Revisiones ilimitadas",
+        "Integración de API avanzada",
+        "Mantenimiento post-lanzamiento"
       ]
     }
   ];
+
+  const handleContract = async (planType) => {
+    const userId = localStorage.getItem('userId');
+    const token = localStorage.getItem('token');
+
+    // Mapeo de tipos de plan a projectType
+    const projectTypeMap = {
+      "PLAN BÁSICO": 2, // Web
+      "PLAN MEDIUM": 2, // Web
+      "PLAN MAXI": 2    // Web
+    };
+
+    const projectType = projectTypeMap[planType]; // Obtén el tipo de proyecto correspondiente
+
+    try {
+      const response = await fetch('/api/users/update-project-type', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          userId,
+          projectType // Asegúrate de que esto sea un número
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al actualizar el tipo de proyecto');
+      }
+
+      // Navegar al componente de pago
+      navigate('/payment');
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
   return (
     <div className="container">
@@ -63,14 +113,14 @@ export default function ProjectDetailsWeb() {
               <ul className="feature-list">
                 {plan.features.map((feature, featureIndex) => (
                   <li key={featureIndex} className="feature-item">
-                    <Check className="feature-icon" />
+                    <FontAwesomeIcon icon={faCheck} className="feature-icon" />
                     {feature}
                   </li>
                 ))}
               </ul>
             </CardContent>
-            <CardFooter>
-              <Button className="action-button">CONTRATAR</Button>
+            <CardFooter className="flex justify-center">
+              <Button className="action-button" onClick={() => handleContract(plan.title)}>CONTRATAR</Button>
             </CardFooter>
           </Card>
         ))}
