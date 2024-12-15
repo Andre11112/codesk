@@ -1,8 +1,8 @@
 import React from 'react';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card";
+import { Button } from "./ui/button";
+import '../styles/ProjectDetails.css';
 import { useNavigate } from 'react-router-dom';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card"
-import { Button } from "./ui/button"
-import '../styles/ProjectDetails.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
@@ -60,14 +60,22 @@ export default function ProjectDetailsWeb() {
     const userId = localStorage.getItem('userId');
     const token = localStorage.getItem('token');
 
-    // Mapeo de tipos de plan a projectType
     const projectTypeMap = {
-      "PLAN BÁSICO": 2, // Web
-      "PLAN MEDIUM": 2, // Web
-      "PLAN MAXI": 2    // Web
+      "PLAN BÁSICO": 2,
+      "PLAN MEDIUM": 2,
+      "PLAN MAXI": 2
     };
 
-    const projectType = projectTypeMap[planType]; // Obtén el tipo de proyecto correspondiente
+    const projectType = projectTypeMap[planType];
+    const selectedPlan = plans.find(plan => plan.title === planType);
+
+    // Validar datos antes de guardarlos
+    if (!selectedPlan) {
+      console.error('Plan seleccionado no encontrado:', planType);
+      return;
+    }
+
+    localStorage.setItem('selectedPlan', JSON.stringify(selectedPlan));
 
     try {
       const response = await fetch('/api/users/update-project-type', {
@@ -78,7 +86,7 @@ export default function ProjectDetailsWeb() {
         },
         body: JSON.stringify({
           userId,
-          projectType // Asegúrate de que esto sea un número
+          projectType
         })
       });
 
@@ -86,7 +94,6 @@ export default function ProjectDetailsWeb() {
         throw new Error('Error al actualizar el tipo de proyecto');
       }
 
-      // Navegar al componente de pago
       navigate('/payment');
     } catch (error) {
       console.error('Error:', error);
@@ -105,10 +112,7 @@ export default function ProjectDetailsWeb() {
             </CardHeader>
             <CardContent className="text-center">
               <div className="price-original">Precio normal {plan.originalPrice}</div>
-              <div className="price-current">
-                {plan.currentPrice}
-                <span className="price-period">/año</span>
-              </div>
+              <div className="price-current">{plan.currentPrice}</div>
               <div className="text-sm text-gray-600 mb-4">Son {plan.monthlyPrice} al mes</div>
               <ul className="feature-list">
                 {plan.features.map((feature, featureIndex) => (
@@ -119,7 +123,7 @@ export default function ProjectDetailsWeb() {
                 ))}
               </ul>
             </CardContent>
-            <CardFooter className="flex justify-center">
+            <CardFooter>
               <Button className="action-button" onClick={() => handleContract(plan.title)}>CONTRATAR</Button>
             </CardFooter>
           </Card>
