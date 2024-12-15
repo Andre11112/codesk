@@ -9,7 +9,7 @@ const SelectUserProject = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const programmerType = localStorage.getItem('programmerType'); // 'web' o 'mobile'
+    const programmerType = localStorage.getItem('programmerType'); 
 
     const navigate = useNavigate();
 
