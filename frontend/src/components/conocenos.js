@@ -1,6 +1,7 @@
 import React from 'react';
 import '../styles/Conocenos.css';
 import imagen1 from '../assets/images/1.png';
+import imagen2 from '../assets/images/2.png';
 
 const Conocenos = ({ darkMode, toggleDarkMode }) => {
     return (
