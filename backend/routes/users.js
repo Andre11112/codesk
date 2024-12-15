@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../db');
-const { authenticateToken } = require('../middleware/auth');
+const authenticateToken = require('../middleware/auth');
 
 // Ruta para obtener usuarios según el tipo de proyecto
 router.get('/users/:projectType', async (req, res) => {
