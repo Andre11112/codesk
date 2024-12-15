@@ -73,7 +73,11 @@ export default function ProjectDetailsMovil() {
     }
 
     localStorage.setItem('selectedPlan', JSON.stringify(selectedPlan));
+<<<<<<< HEAD
     localStorage.setItem('selectedProjectId', '1'); // Móvil
+=======
+    localStorage.setItem('projectType', '1'); // 1 para móvil
+>>>>>>> 4a771c93726a889de8a56cb73a2a856c10faf2d0
 
     try {
       const response = await fetch('/api/users/update-project-type', {
@@ -120,7 +124,7 @@ export default function ProjectDetailsMovil() {
                 ))}
               </ul>
             </CardContent>
-            <CardFooter>
+            <CardFooter className="flex justify-center">
               <Button className="action-button" onClick={() => handleContract(plan.title)}>CONTRATAR</Button>
             </CardFooter>
           </Card>
