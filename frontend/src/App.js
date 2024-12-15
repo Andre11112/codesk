@@ -15,6 +15,7 @@ import MobileChatUser from './components/MobileChatUser';
 import ProjectDetailsMovil from './components/ProjectDetailsMovil';
 import ProjectDetailsWeb from './components/ProjectDetailsWeb';
 import Payment from './components/Payment';
+import SelectUserProject from './components/SelectUserProject';
 
 function AppContent() {
     const location = useLocation();
@@ -73,6 +74,7 @@ function AppContent() {
                         <Route path="/project-details-mobile" element={<ProjectDetailsMovil projectType="mobile" />} />
                         <Route path="/project-details-web" element={<ProjectDetailsWeb projectType="web" />} />
                         <Route path="/payment" element={<Payment />} />
+                        <Route path="/select-user-project" element={<SelectUserProject />} />
                     </Routes>
                 </main>
             </div>

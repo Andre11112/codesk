@@ -62,12 +62,17 @@ export default function ProjectDetailsWeb() {
 
     // Mapeo de tipos de plan a projectType
     const projectTypeMap = {
-      "PLAN BÁSICO": 2, // Web
-      "PLAN MEDIUM": 2, // Web
-      "PLAN MAXI": 2    // Web
+      "PLAN BÁSICO": 2,
+      "PLAN MEDIUM": 2,
+      "PLAN MAXI": 2
     };
 
-    const projectType = projectTypeMap[planType]; // Obtén el tipo de proyecto correspondiente
+    const projectType = projectTypeMap[planType];
+
+    // Guardar detalles del plan seleccionado en localStorage
+    const selectedPlan = plans.find(plan => plan.title === planType);
+    localStorage.setItem('selectedPlan', JSON.stringify(selectedPlan));
+    localStorage.setItem('projectType', '2'); // 2 para web
 
     try {
       const response = await fetch('/api/users/update-project-type', {
@@ -78,7 +83,7 @@ export default function ProjectDetailsWeb() {
         },
         body: JSON.stringify({
           userId,
-          projectType // Asegúrate de que esto sea un número
+          projectType
         })
       });
 
