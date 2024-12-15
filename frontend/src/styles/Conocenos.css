@@ -1,69 +1,254 @@
+/* ============================= */
+/*         Importar Fuentes      */
+/* ============================= */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+/* ============================= */
+/*          Estilos Globales     */
+/* ============================= */
 body {
-    position: relative;
-    font-family: 'Roboto', sans-serif;
-    background-color: #f5f8ff;
-    overflow: scroll;
-    overflow-x: hidden;
+  font-family: 'Poppins', sans-serif; /* Nueva tipografía aplicada */
+  background-color: #f9fafe;
+  color: #333;
+  margin: 0;
+  line-height: 1.6;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ============================= */
+/*          Contenedor           */
+/* ============================= */
+.container {
+  width: 90%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* ============================= */
+/*          Modo Oscuro          */
+/* ============================= */
+.dark-mode {
+  background-color: #1b1f29;
+  color: white;
+}
+
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode p,
+.dark-mode a {
+  color: white;
+}
+
+.dark-mode .service-item {
+  background-color: #292d39;
+}
+
+.dark-mode .contact-form input,
+.dark-mode .contact-form textarea {
+  background-color: #292d39;
+  color: white;
+  border: 1px solid #444;
+}
+
+.dark-mode .botonInicioSesion {
+  background: linear-gradient(180deg, #444 0%, #666 100%);
+}
+
+/* ============================= */
+/*           Encabezado          */
+/* ============================= */
+.hero-bg {
+  background: url('../assets/images/30.png') center center no-repeat,
+    linear-gradient(white 100%, white 100%);
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #333;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+nav a {
+  color: #333;
+  font-family: 'Poppins', sans-serif; /* Aplicar la nueva tipografía al menú */
+  text-decoration: none;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease-in-out, color 0.3s;
+}
+
+nav a:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Logo */
+.logo-image {
+  border: none;
+  width: 60px;
+  height: 60px;
+  background-size: cover;
+}
+
+/* ============================= */
+/*       Botones y Acciones      */
+/* ============================= */
+.botonInicioSesion {
+  display: inline-block;
+  padding: 12px 20px;
+  border-radius: 50px;
+  background: linear-gradient(45deg, #ff083a, #ffb199);
+  color: white;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif; /* Nueva tipografía */
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.botonInicioSesion:hover {
+  transform: scale(1.05);
+  background: linear-gradient(45deg, #ff0050, #ff9f90);
+}
+
+.registro {
+  color: #333;
+  text-decoration: none;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.registro:hover {
+  color: #ff083a;
+}
+
+/* ============================= */
+/*     Sección: Sobre Nosotros   */
+/* ============================= */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 40px;
+}
+
+.service-item {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.service-item h3 {
+  font-family: 'Poppins', sans-serif; /* Nueva tipografía */
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  color: #007bff;
+}
+
+.service-item p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+/* ============================= */
+/*     Formulario de Contacto    */
+/* ============================= */
+.contact-form {
+  margin: 50px auto;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-form label {
+  font-family: 'Poppins', sans-serif; /* Nueva tipografía */
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: 'Poppins', sans-serif; /* Aplicar tipografía */
+  transition: border 0.3s ease-in-out;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.contact-form textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.contact-form button {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif; /* Nueva tipografía */
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease;
+}
+
+.contact-form button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* ============================= */
+/* Media Queries para Responsiveness */
+/* ============================= */
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column;
   }
-  
-  .background {
-    position: absolute;
-    width: 800px;
-    height: 800px;
-    background-image: url(../assets/images/30.png);
-    top: 50%;
-    left: 50%;
-  }
-  
-  nav a{
-    justify-content: space-between;
-    align-items: center;
-    background-color: white;
-    color:black;
-  }
-  
-  .registro {
-    color: black; 
-    text-decoration: none; 
-  }
-  
-  .registro:hover {
-    color: black; 
-  }
-  
-  .faq-item {
-    cursor: pointer;
-  }
-  
-  .faq-item.active .faq-answer {
-    display: block;
-  }
-  
-  .faq-answer {
-    display: none;
-    padding-top: 0.5rem;
-  }
-  
-  .hero-bg {
-    background: 
-      url('../assets/images/30.png') center center no-repeat, 
-      linear-gradient( white 100%, white 100%); 
-      background-size: 868.557px 882.805px;
-      background-attachment: fixed; 
-      position: relative; 
-      height: 100vh; 
-  }
-  
-  .logo-image {
-    border: none;
-    width: 50px;
-    height: 58px;
-    flex-shrink: 0;
-    background-image: url(../assets/images/1.png);
-    background-size: 100% 100%;
-  }
-  
+
   .botonInicioSesion {
+<<<<<<< HEAD
     position: relative;
     width: 132px;
     height: 48px;
@@ -151,8 +336,8 @@ body {
     grid-row: span 2;
     flex-grow: 1; 
     display: flex;
-    flex-direction: column; 
-    align-items: flex-start; 
+    
+    
   }
   
   .service-html5 .service-item-content {
@@ -257,58 +442,8 @@ body {
   .coesk-footer-content {
     display: flex;
     justify-content: space-between;
+=======
+>>>>>>> 18deaf58c290280f6cf7a2959c0363d68005be0d
     width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
   }
-  
-  .coesk-logo-section {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-  }
-  
-  .coesk-logo-img {
-    width: 60px;
-    height: auto;
-  }
-  
-  .coesk-footer-description {
-    font-size: 16px;
-    color: #6b7280; 
-    margin-top: 8px;
-    max-width: 400px;
-  }
-  
-  .coesk-menu-section {
-    display: flex;
-    gap: 40px;
-    color: #6b7280;
-  }
-  
-  .coesk-menu-section a {
-    color: #6b7280;
-    text-decoration: none;
-  }
-  
-  .coesk-social-section {
-    display: flex;
-    gap: 16px;
-  }
-  
-  .coesk-social-section a {
-    width: 30px;
-    height: 30px;
-    display: inline-block;
-    background-color: #e5e7eb;
-    border-radius: 50%;
-    color: #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .coesk-social-section a:hover {
-    background-color: #2966df;
-  }
-  
+}

@@ -1,7 +1,7 @@
 import React from 'react';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card"
-import { Button } from "./ui/button"
-import '../styles/ProjectDetails.css'
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card";
+import { Button } from "./ui/button";
+import '../styles/ProjectDetails.css';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
@@ -57,41 +57,52 @@ export default function ProjectDetailsMovil() {
     const userId = localStorage.getItem('userId');
     const token = localStorage.getItem('token');
 
-    // Mapeo de tipos de plan a projectType
     const projectTypeMap = {
-        "PLAN BÁSICO": 1,
-        "PLAN MEDIUM": 1,
-        "PLAN MAXI": 1
+      "PLAN BÁSICO": 1,
+      "PLAN MEDIUM": 1,
+      "PLAN MAXI": 1
     };
 
     const projectType = projectTypeMap[planType];
-
-    // Guardar detalles del plan en localStorage
     const selectedPlan = plans.find(plan => plan.title === planType);
+
+    // Validar datos antes de guardarlos
+    if (!selectedPlan) {
+      console.error('Plan seleccionado no encontrado:', planType);
+      return;
+    }
+
     localStorage.setItem('selectedPlan', JSON.stringify(selectedPlan));
+<<<<<<< HEAD
+    localStorage.setItem('selectedProjectId', '1'); // Móvil
+=======
+<<<<<<< HEAD
+    localStorage.setItem('selectedProjectId', '1'); // Móvil
+=======
+>>>>>>> 47dafd25e8b86747b669c3054886fd1f6673bf29
     localStorage.setItem('projectType', '1'); // 1 para móvil
+>>>>>>> 4a771c93726a889de8a56cb73a2a856c10faf2d0
 
     try {
-        const response = await fetch('/api/users/update-project-type', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({
-                userId,
-                projectType
-            })
-        });
+      const response = await fetch('/api/users/update-project-type', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          userId,
+          projectType
+        })
+      });
 
-        if (!response.ok) {
-            throw new Error('Error al actualizar el tipo de proyecto');
-        }
+      if (!response.ok) {
+        throw new Error('Error al actualizar el tipo de proyecto');
+      }
 
-        // Navegar al componente de pago
-        navigate('/payment');
+      navigate('/payment');
     } catch (error) {
-        console.error('Error:', error);
+      console.error('Error:', error);
     }
   };
 
@@ -126,4 +137,3 @@ export default function ProjectDetailsMovil() {
     </div>
   );
 }
-

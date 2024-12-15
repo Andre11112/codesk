@@ -5,6 +5,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 const Payment = () => {
+<<<<<<< HEAD
+  const navigate = useNavigate();
+  const [planDetails, setPlanDetails] = useState(null);
+
+  useEffect(() => {
+    const plan = JSON.parse(localStorage.getItem('selectedPlan'));
+    if (plan) {
+      setPlanDetails(plan);
+    } else {
+      console.error('No se encontró un plan en localStorage');
+    }
+  }, []);
+=======
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [cardNumber, setCardNumber] = useState('');
@@ -21,31 +34,39 @@ const Payment = () => {
         setIsWebPlan(projectType === '2');
         setPlanDetails(plan);
     }, []);
+>>>>>>> 4a771c93726a889de8a56cb73a2a856c10faf2d0
 
-    const handlePaymentSuccess = async () => {
-        const userId = localStorage.getItem('userId');
-        const projectType = localStorage.getItem('projectType');
+  const handlePaymentSuccess = async () => {
+    if (!planDetails) {
+      console.error('Datos del plan ausentes');
+      return;
+    }
+    console.log('Procesar pago con plan:', planDetails);
+    navigate('/payment-success');
+  };
 
-        if (!userId || !email || !cardNumber || !country || !planDetails) {
-            console.error('Faltan datos necesarios para procesar el pago');
-            return;
-        }
+  const handleCancel = () => {
+    const selectedProjectId = localStorage.getItem('selectedProjectId');
 
-        try {
-            const response = await fetch('http://localhost:5000/api/users/record-payment', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    userId,
-                    email,
-                    card_number: cardNumber,
-                    country_or_region: country,
-                    planType: planDetails.title,
-                }),
-            });
+    if (selectedProjectId === '1') {
+      navigate('/project-details-mobile');
+    } else if (selectedProjectId === '2') {
+      navigate('/project-details-web');
+    } else {
+      console.error('No se encontró el ID del proyecto seleccionado.');
+      navigate('/'); // Redirige a la página principal
+    }
+  };
 
+<<<<<<< HEAD
+  return (
+    <div className="flex justify-center items-start space-x-8 p-4 max-w-6xl mx-auto font-sans">
+      {/* Panel Izquierdo - Resumen del pedido */}
+      <div className="w-96 bg-white p-6 rounded-lg">
+        <div className="mb-4">
+          <h2 className="text-2xl font-bold">{planDetails ? planDetails.currentPrice : '0,00 €'}</h2>
+          <p className="text-gray-600 text-sm">Detalles del Plan</p>
+=======
             if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error(errorData.message || 'Error al registrar el pago');
@@ -226,8 +247,41 @@ const Payment = () => {
                     </button>
                 </form>
             </div>
+>>>>>>> 4a771c93726a889de8a56cb73a2a856c10faf2d0
         </div>
-    );
+
+        <div className="space-y-6">
+          {planDetails && (
+            <div className="flex items-start">
+              <div className="flex-1">
+                <h3 className="font-medium text-sm">{planDetails.title}</h3>
+              </div>
+              <span className="text-sm">{planDetails.currentPrice}€</span>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Panel Derecho - Formulario de Pago */}
+      <div className="w-96 bg-white p-6 rounded-lg">
+        <button
+          type="button"
+          onClick={handleCancel}
+          className="w-full bg-red-600 text-white py-3 rounded-md mt-2"
+        >
+          Cancelar
+        </button>
+
+        <button
+          type="button"
+          onClick={handlePaymentSuccess}
+          className="w-full bg-blue-600 text-white py-3 rounded-md mt-2"
+        >
+          Pagar
+        </button>
+      </div>
+    </div>
+  );
 };
 
 export default Payment;

@@ -41,6 +41,7 @@
     margin-bottom: 2rem;
     line-height: 1.6;
     color: white;
+
 }
 
 .buttons {
@@ -77,6 +78,7 @@
 .button:hover {
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    background-color: #9b4dca;
 }
 
 .button::after {
@@ -110,3 +112,79 @@ body {
 .footer {
     display: none; 
 }
+
+
+
+
+.plans {
+    margin-top: 2rem;
+}
+
+.plans-menu {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.plan-button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    background-color: #7a7a7a;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.plan-button:hover {
+    background-color: #9b4dca;  /* Color morado */
+    color: white;
+}
+
+.plan-button.active {
+    background-color: #9b4dca;
+    color: white;
+    transform: scale(1.1);
+}
+
+.plan-details {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    border-radius: 10px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.plan-details ul {
+    list-style: none;
+    padding: 0;
+}
+
+.plan-details li {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+}
+
+.plan-details .price {
+    font-size: 1.5rem; 
+    color: black;     
+    font-weight: bold; 
+}
+
+.subscribe-button {
+    margin-top: 1rem;
+    padding: 0.8rem 1.5rem;
+    background-color: #ff4c68;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.subscribe-button:hover {
+    background-color: #e03e5a;
+}
+
