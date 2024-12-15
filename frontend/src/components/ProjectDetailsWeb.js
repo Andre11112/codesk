@@ -67,23 +67,11 @@ export default function ProjectDetailsWeb() {
     };
 
     const projectType = projectTypeMap[planType];
-<<<<<<< HEAD
-    const selectedPlan = plans.find(plan => plan.title === planType);
-
-    // Validar datos antes de guardarlos
-    if (!selectedPlan) {
-      console.error('Plan seleccionado no encontrado:', planType);
-      return;
-    }
-
-    localStorage.setItem('selectedPlan', JSON.stringify(selectedPlan));
-=======
 
     // Guardar detalles del plan seleccionado en localStorage
     const selectedPlan = plans.find(plan => plan.title === planType);
     localStorage.setItem('selectedPlan', JSON.stringify(selectedPlan));
     localStorage.setItem('projectType', '2'); // 2 para web
->>>>>>> 4a771c93726a889de8a56cb73a2a856c10faf2d0
 
     try {
       const response = await fetch('/api/users/update-project-type', {

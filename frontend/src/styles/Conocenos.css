@@ -248,7 +248,6 @@ nav a:hover {
   }
 
   .botonInicioSesion {
-<<<<<<< HEAD
     position: relative;
     width: 132px;
     height: 48px;
@@ -442,8 +441,6 @@ nav a:hover {
   .coesk-footer-content {
     display: flex;
     justify-content: space-between;
-=======
->>>>>>> 18deaf58c290280f6cf7a2959c0363d68005be0d
     width: 100%;
   }
 }
