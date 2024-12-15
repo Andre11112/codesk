@@ -73,6 +73,7 @@ export default function ProjectDetailsMovil() {
     }
 
     localStorage.setItem('selectedPlan', JSON.stringify(selectedPlan));
+    localStorage.setItem('selectedProjectId', '1'); // Móvil
     localStorage.setItem('projectType', '1'); // 1 para móvil
 
     try {
