@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../db');
+const { authenticateToken } = require('../middleware/auth');
 
 // Ruta para obtener usuarios según el tipo de proyecto
 router.get('/users/:projectType', async (req, res) => {
@@ -68,44 +69,36 @@ router.get('/web', async (req, res) => {
 });
 
 
-router.put('/update-project-type', async (req, res) => {
-    const { userId, projectType } = req.body;
-    
-    console.log('Actualizando project_type:', {
-        userId,
-        projectType,
-        tipoUserId: typeof userId,
-        tipoProjectType: typeof projectType
-    });
-
+router.put('/update-project-type', authenticateToken, async (req, res) => {
     try {
+        const { userId, projectType } = req.body;
+        
+        // Verificar que el usuario existe
+        const userCheck = await pool.query(
+            'SELECT * FROM users WHERE id = $1',
+            [userId]
+        );
+
+        if (userCheck.rows.length === 0) {
+            return res.status(404).json({ error: 'Usuario no encontrado' });
+        }
+
+        // Actualizar el tipo de proyecto
         const result = await pool.query(
-            'UPDATE users SET project_type = $1 WHERE id = $2 RETURNING id, first_name, last_name, email, project_type',
+            'UPDATE users SET project_type = $1 WHERE id = $2 RETURNING *',
             [projectType, userId]
         );
 
-        console.log('Resultado de la actualización:', {
-            filas: result.rowCount,
-            datos: result.rows[0]
-        });
-
-        if (result.rows.length === 0) {
-            return res.status(404).json({
-                error: 'Usuario no encontrado',
-                message: 'No se encontró el usuario con el ID proporcionado'
-            });
-        }
+        console.log('Usuario actualizado:', result.rows[0]);
 
         res.json({
             message: 'Tipo de proyecto actualizado exitosamente',
             user: result.rows[0]
         });
+
     } catch (error) {
-        console.error('Error en la actualización:', error);
-        res.status(500).json({
-            error: 'Error del servidor',
-            message: 'Error al actualizar el tipo de proyecto'
-        });
+        console.error('Error al actualizar el tipo de proyecto:', error);
+        res.status(500).json({ error: 'Error al actualizar el tipo de proyecto' });
     }
 });
 

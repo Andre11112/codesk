@@ -27,16 +27,24 @@ const SelectProject = () => {
     }, [navigate]);
 
     const handleSelection = async (type) => {
-        setSelectedType(type);
-        const token = localStorage.getItem('token');
         const userId = localStorage.getItem('userId');
+        const token = localStorage.getItem('token');
         
+        if (!userId) {
+            console.error('No se encontró el ID del usuario');
+            setError('Error: Usuario no identificado');
+            navigate('/login');
+            return;
+        }
+
+        console.log('ID del usuario actual:', userId);
+        const projectType = type === 'mobile' ? 1 : 2;
+
         setIsLoading(true);
         setError(null);
+        setSelectedType(type);
 
         try {
-            const projectType = type === 'mobile' ? 1 : 2;
-            
             const response = await fetch('/api/users/update-project-type', {
                 method: 'PUT',
                 headers: {
@@ -49,10 +57,13 @@ const SelectProject = () => {
                 })
             });
 
+            const data = await response.json();
+            
             if (!response.ok) {
-                throw new Error('Error al actualizar el tipo de proyecto');
+                throw new Error(data.message || 'Error al actualizar el tipo de proyecto');
             }
 
+            console.log('Actualización exitosa para el usuario:', data.user);
             localStorage.setItem('projectType', projectType.toString());
             
             if (type === 'mobile') {

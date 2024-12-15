@@ -8,36 +8,52 @@ const jwt = require('jsonwebtoken');
 
 // Ruta de registro para usuarios
 router.post('/register', async (req, res) => {
-  const { email, password, firstName, lastName } = req.body;
-
-  // Validar que todos los campos estén presentes
-  if (!email || !password || !firstName || !lastName) {
-    return res.status(400).json({ error: 'Todos los campos son obligatorios' });
-  }
-
   try {
+    const { email, password, firstName, lastName } = req.body;
+    
     // Verificar si el usuario ya existe
-    const existingUser = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
-    if (existingUser.rows.length > 0) {
-      return res.status(400).json({ error: 'El correo electrónico ya está en uso' });
-    }
-
-    // Hashear la contraseña
-    const password_hash = await bcrypt.hash(password, 10);
-
-    // Insertar el nuevo usuario en la base de datos
-    const result = await pool.query(
-      'INSERT INTO users (first_name, last_name, email, password_hash) VALUES ($1, $2, $3, $4) RETURNING *',
-      [firstName, lastName, email, password_hash]
+    const userExists = await pool.query(
+      'SELECT * FROM users WHERE email = $1',
+      [email]
     );
 
-    console.log('Usuario registrado:', result.rows[0]);
+    if (userExists.rows.length > 0) {
+      return res.status(400).json({ error: 'El usuario ya existe' });
+    }
 
-    // Responder con éxito
-    res.status(201).json({ message: 'Registro exitoso', user: result.rows[0] });
+    // Crear el hash de la contraseña
+    const password_hash = await bcrypt.hash(password, 10);
+
+    // Insertar nuevo usuario
+    const result = await pool.query(
+      'INSERT INTO users (email, password_hash, first_name, last_name) VALUES ($1, $2, $3, $4) RETURNING id, email, first_name, last_name',
+      [email, password_hash, firstName, lastName]
+    );
+
+    const user = result.rows[0];
+    
+    // Generar token
+    const token = jwt.sign(
+      { userId: user.id },
+      process.env.JWT_SECRET,
+      { expiresIn: '24h' }
+    );
+
+    // Enviar respuesta con el ID del usuario y el token
+    res.status(201).json({
+      message: 'Usuario registrado exitosamente',
+      user: {
+        id: user.id,
+        email: user.email,
+        firstName: user.first_name,
+        lastName: user.last_name
+      },
+      token
+    });
+
   } catch (error) {
-    console.error('Error al registrar usuario:', error);
-    res.status(500).json({ error: 'Error al registrar usuario' });
+    console.error('Error en el registro:', error);
+    res.status(500).json({ error: 'Error en el registro de usuario' });
   }
 });
 
