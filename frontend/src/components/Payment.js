@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Payment.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 const Payment = () => {
     const navigate = useNavigate();
@@ -11,9 +13,12 @@ const Payment = () => {
     const [cardHolderName, setCardHolderName] = useState('');
     const [country, setCountry] = useState('');
     const [planDetails, setPlanDetails] = useState(null);
+    const [isWebPlan, setIsWebPlan] = useState(false);
 
     useEffect(() => {
         const plan = JSON.parse(localStorage.getItem('selectedPlan'));
+        const projectType = localStorage.getItem('projectType');
+        setIsWebPlan(projectType === '2');
         setPlanDetails(plan);
     }, []);
 
@@ -67,7 +72,18 @@ const Payment = () => {
             {/* Left Panel - Order Summary */}
             <div className="w-96 bg-white p-6 rounded-lg">
                 <div className="mb-4">
-                    <h2 className="text-2xl font-bold">{planDetails ? planDetails.currentPrice : '0,00 €'}</h2>
+                    <h2 className="text-2xl font-bold">
+                        {planDetails ? (
+                            isWebPlan ? (
+                                <>
+                                    {planDetails.currentPrice}
+                                    <span className="text-sm text-gray-500">/año</span>
+                                </>
+                            ) : (
+                                planDetails.currentPrice
+                            )
+                        ) : '0,00 €'}
+                    </h2>
                     <p className="text-gray-600 text-sm">Detalles del Plan</p>
                 </div>
 
@@ -76,9 +92,30 @@ const Payment = () => {
                         <div className="flex items-start">
                             <div className="flex-1">
                                 <h3 className="font-medium text-sm">{planDetails.title}</h3>
-                                <p className="text-gray-500 text-xs">{planDetails.description}</p>
+                                {isWebPlan && (
+                                    <p className="text-gray-500 text-xs">
+                                        Son {planDetails.monthlyPrice} al mes
+                                    </p>
+                                )}
+                                <ul className="mt-2 space-y-1">
+                                    {planDetails.features.map((feature, index) => (
+                                        <li key={index} className="text-gray-500 text-xs flex items-center">
+                                            <FontAwesomeIcon icon={faCheck} className="text-green-500 mr-2" />
+                                            {feature}
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>
-                            <span className="text-sm">{planDetails.currentPrice}€</span>
+                            <span className="text-sm">
+                                {isWebPlan ? (
+                                    <>
+                                        {planDetails.currentPrice}
+                                        <span className="text-xs text-gray-500">/año</span>
+                                    </>
+                                ) : (
+                                    planDetails.currentPrice
+                                )}
+                            </span>
                         </div>
                     )}
                 </div>

@@ -69,6 +69,7 @@ export default function ProjectDetailsMovil() {
     // Guardar detalles del plan en localStorage
     const selectedPlan = plans.find(plan => plan.title === planType);
     localStorage.setItem('selectedPlan', JSON.stringify(selectedPlan));
+    localStorage.setItem('projectType', '1'); // 1 para móvil
 
     try {
         const response = await fetch('/api/users/update-project-type', {
@@ -116,7 +117,7 @@ export default function ProjectDetailsMovil() {
                 ))}
               </ul>
             </CardContent>
-            <CardFooter>
+            <CardFooter className="flex justify-center">
               <Button className="action-button" onClick={() => handleContract(plan.title)}>CONTRATAR</Button>
             </CardFooter>
           </Card>
