@@ -23,7 +23,8 @@ import imagen1 from './assets/images/1.png';
 function AppContent() {
     const location = useLocation();
     const hideHeaderRoutes = ['/','/login', '/register', '/select-project',
-         '/chat/mobile', '/chat/web','/chat/user/web',
+         '/chat/mobile', '/chat/web','/chat/user/web',"/chat/programmer/web",
+         "/chat/programmer/mobile",
          '/chat/user/mobile','/typeprogrammer','/project-details-mobile',
          '/project-details-web','/Conocenos','/payment'];
     

@@ -16,8 +16,8 @@ const SelectUserProjectWeb = () => {
         const fetchUsers = async () => {
             try {
                 setLoading(true);
-                // Llamada específica para usuarios web (projectType = 2)
-                const response = await fetch(`/api/users/users/2`);
+                // Obtener usuarios con planes web pagados
+                const response = await fetch('http://localhost:5000/api/users/users/2');
                 
                 if (!response.ok) {
                     throw new Error('Error al cargar los usuarios');
@@ -36,9 +36,9 @@ const SelectUserProjectWeb = () => {
         fetchUsers();
     }, []);
 
-    const handleUserSelect = (userId) => {
+    const handleChatClick = (userId) => {
         localStorage.setItem('selectedUserId', userId);
-        navigate('/chat/web');
+        navigate('/chat/programmer/web');
     };
 
     return (
@@ -60,37 +60,46 @@ const SelectUserProjectWeb = () => {
                     {users.map((user) => (
                         <Card 
                             key={user.id} 
-                            className="cursor-pointer hover:shadow-lg transition-shadow"
-                            onClick={() => handleUserSelect(user.id)}
+                            className="hover:shadow-lg transition-shadow"
                         >
                             <CardHeader>
-                                <CardTitle className="text-xl">
-                                    {user.first_name} {user.last_name}
+                                <CardTitle className="text-xl flex justify-between items-center">
+                                    <span>{user.first_name} {user.last_name}</span>
+                                    <span className="text-sm bg-green-100 text-green-800 px-2 py-1 rounded">
+                                        Plan Activo
+                                    </span>
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
-                                <div className="space-y-2">
-                                    <p className="text-gray-600">Email: {user.email}</p>
-                                    <div className="border-t pt-2">
+                                <div className="space-y-4">
+                                    <div>
+                                        <p className="text-gray-600">Email: {user.email}</p>
+                                        <p className="text-gray-600 text-sm">
+                                            Fecha de compra: {new Date(user.created_at).toLocaleDateString()}
+                                        </p>
+                                    </div>
+
+                                    <div className="border-t pt-4">
                                         <h4 className="font-semibold mb-2">Detalles del Plan:</h4>
-                                        {user.selectedPlan && (
-                                            <>
-                                                <p className="text-blue-600 font-medium">
-                                                    {user.selectedPlan.title}
-                                                </p>
-                                                <p className="text-sm text-gray-500">
-                                                    Precio: {user.selectedPlan.currentPrice}
-                                                </p>
-                                                <ul className="mt-2 space-y-1">
-                                                    {user.selectedPlan.features.map((feature, index) => (
-                                                        <li key={index} className="text-sm text-gray-600">
-                                                            • {feature}
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            </>
+                                        <p className="text-blue-600 font-medium">
+                                            {user.plan_type}
+                                        </p>
+                                        {user.description && (
+                                            <p className="text-sm text-gray-600 mt-2">
+                                                {user.description}
+                                            </p>
                                         )}
                                     </div>
+
+                                    <button
+                                        onClick={() => handleChatClick(user.id)}
+                                        className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center gap-2"
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd" />
+                                        </svg>
+                                        Iniciar Chat
+                                    </button>
                                 </div>
                             </CardContent>
                         </Card>

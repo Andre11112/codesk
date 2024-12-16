@@ -105,31 +105,44 @@ const UserPerfil = ({ darkMode }) => {
                                     {userData?.first_name?.charAt(0)}
                                 </span>
                             </div>
-                            <div>
-                                <h2 className="text-xl font-semibold">
-                                    {userData?.first_name} {userData?.last_name}
-                                </h2>
-                                <p className="text-gray-600">{userData?.email}</p>
-                                {userData?.plan_type && (
-                                    <div className="mt-2">
-                                        <p className="text-sm text-blue-600">
-                                            Plan actual: {userData.plan_type}
-                                        </p>
-                                        <p className="text-xs text-gray-500">
-                                            Estado: {userData.is_paid ? 'Pagado' : 'Pendiente'}
-                                        </p>
-                                        {userData.payment_date && (
-                                            <p className="text-xs text-gray-500">
-                                                Último pago: {new Date(userData.payment_date).toLocaleDateString()}
-                                            </p>
-                                        )}
-                                        {userData.total_plans > 0 && (
-                                            <p className="text-xs text-blue-500 font-semibold mt-1">
-                                                Total de planes activos: {userData.total_plans}
-                                            </p>
+                            <div className="flex-1">
+                                <div className="flex items-start justify-between">
+                                    <div>
+                                        <h2 className="text-xl font-semibold">
+                                            {userData?.first_name} {userData?.last_name}
+                                        </h2>
+                                        <p className="text-gray-600">{userData?.email}</p>
+                                        {userData?.plan_type && (
+                                            <div className="mt-2">
+                                                <p className="text-sm text-blue-600">
+                                                    Plan actual: {userData.plan_type}
+                                                </p>
+                                                <p className="text-xs text-gray-500">
+                                                    Estado: {userData.is_paid ? 'Pagado' : 'Pendiente'}
+                                                </p>
+                                                {userData.payment_date && (
+                                                    <p className="text-xs text-gray-500">
+                                                        Último pago: {new Date(userData.payment_date).toLocaleDateString()}
+                                                    </p>
+                                                )}
+                                                {userData.total_plans > 0 && (
+                                                    <p className="text-xs text-blue-500 font-semibold mt-1">
+                                                        Total de planes activos: {userData.total_plans}
+                                                    </p>
+                                                )}
+                                            </div>
                                         )}
                                     </div>
-                                )}
+                                    <button
+                                        onClick={() => navigate('/select-project')}
+                                        className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors flex items-center gap-2"
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
+                                        </svg>
+                                        <span>Comprar Nuevo Plan</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>

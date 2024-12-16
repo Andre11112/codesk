@@ -10,13 +10,14 @@ const MobileChatUser = () => {
     const [messages, setMessages] = useState({});
     const [newMessage, setNewMessage] = useState('');
     const [selectedProgrammer, setSelectedProgrammer] = useState(null);
+    const [chatId, setChatId] = useState(null);
     const chatMessagesRef = useRef(null);
     
     const getMobileProgrammers = useCallback(async () => {
         try {
             setLoading(true);
             setError(null);
-            const response = await fetch('/api/chat/programmers/mobile'); // Asegúrate de que esta ruta sea correcta
+            const response = await fetch('/api/chat/programmers/mobile');
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -30,7 +31,6 @@ const MobileChatUser = () => {
         }
     }, []);
     
-
     useEffect(() => {
         getMobileProgrammers();
     }, [getMobileProgrammers]);
@@ -59,10 +59,8 @@ const MobileChatUser = () => {
     };
     
     const handleProgrammerSelect = async (programmer) => {
-        setSelectedProgrammer(programmer);
-        
         try {
-            const userId = localStorage.getItem('userId');
+            const userId = localStorage.getItem('selectedUserId');
             if (!userId) {
                 setError('Error: Usuario no identificado');
                 return;
@@ -84,6 +82,8 @@ const MobileChatUser = () => {
             }
     
             const data = await response.json();
+            setChatId(data.chat_id);
+            setSelectedProgrammer(programmer);
             localStorage.setItem('currentChatId', data.chat_id.toString());
     
             // Cargar historial del chat
@@ -95,15 +95,7 @@ const MobileChatUser = () => {
     };
     
     const handleSendMessage = async () => {
-        if (!newMessage.trim() || !selectedProgrammer) return;
-    
-        const userId = localStorage.getItem('userId');
-        const chatId = localStorage.getItem('currentChatId');
-    
-        if (!chatId || !userId) {
-            console.error('Falta información necesaria para enviar el mensaje');
-            return;
-        }
+        if (!newMessage.trim() || !selectedProgrammer || !chatId) return;
     
         try {
             const response = await fetch('/api/messages', {
@@ -112,8 +104,8 @@ const MobileChatUser = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    chat_id: parseInt(chatId),
-                    sender_id: parseInt(userId),
+                    chat_id: chatId,
+                    sender_id: parseInt(localStorage.getItem('selectedUserId')),
                     sender_type: 'user',
                     message_text: newMessage,
                 }),
@@ -147,7 +139,6 @@ const MobileChatUser = () => {
         }
     };
 
-   
     const handleKeyPress = (e) => {
         if (e.key === 'Enter') {
             handleSendMessage();
@@ -233,10 +224,16 @@ const MobileChatUser = () => {
                             value={newMessage}
                             onChange={(e) => setNewMessage(e.target.value)}
                             onKeyPress={handleKeyPress}
+                            disabled={!selectedProgrammer}
                         />
                         <button
                             onClick={handleSendMessage}
-                            className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+                            className={`px-6 py-2 rounded-lg transition-colors ${
+                                selectedProgrammer 
+                                    ? 'bg-blue-500 hover:bg-blue-600 text-white' 
+                                    : 'bg-gray-300 cursor-not-allowed text-gray-500'
+                            }`}
+                            disabled={!selectedProgrammer}
                         >
                             Enviar
                         </button>

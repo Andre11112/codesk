@@ -14,7 +14,16 @@ router.get('/users/:projectType', async (req, res) => {
   try {
     console.log('Ejecutando consulta SQL para projectType:', projectType);
     const result = await pool.query(
-      'SELECT id, first_name, last_name, email, project_type FROM users WHERE project_type = $1',
+      `SELECT DISTINCT u.id, u.first_name, u.last_name, u.email, u.project_type,
+              p.plan_type, p.created_at, pd.description
+       FROM users u
+       JOIN payments p ON u.id = p.user_id
+       JOIN plan_details pd ON p.plan_type = pd.plan_type
+       WHERE p.is_paid = true AND 
+             CASE 
+                WHEN $1 = '1' THEN p.plan_type LIKE 'MOVIL%'
+                WHEN $1 = '2' THEN p.plan_type LIKE 'WEB%'
+             END`,
       [projectType]
     );
     
