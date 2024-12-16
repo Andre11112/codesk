@@ -31,7 +31,23 @@ const Payment = () => {
             return;
         }
 
+        const getPlanTypeForDB = (title, isWeb) => {
+            const planPrefix = isWeb ? 'WEB ' : 'MOVIL ';
+            switch(title) {
+                case 'PLAN BÁSICO':
+                    return planPrefix + 'BASICO';
+                case 'PLAN MEDIUM':
+                    return planPrefix + 'MEDIUM';
+                case 'PLAN MAXI':
+                    return planPrefix + 'MAXI';
+                default:
+                    return title;
+            }
+        };
+
         try {
+            const planTypeForDB = getPlanTypeForDB(planDetails.title, isWebPlan);
+            
             const response = await fetch('http://localhost:5000/api/users/record-payment', {
                 method: 'POST',
                 headers: {
@@ -42,7 +58,7 @@ const Payment = () => {
                     email,
                     card_number: cardNumber,
                     country_or_region: country,
-                    planType: planDetails.title,
+                    planType: planTypeForDB,
                 }),
             });
 
@@ -51,8 +67,7 @@ const Payment = () => {
                 throw new Error(errorData.message || 'Error al registrar el pago');
             }
 
-            const chatRoute = projectType === '1' ? '/chat/mobile' : '/chat/web';
-            navigate(chatRoute);
+            navigate('/user-perfil');
         } catch (error) {
             console.error('Error:', error);
         }

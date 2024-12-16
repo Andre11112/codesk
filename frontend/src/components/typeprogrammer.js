@@ -36,9 +36,9 @@ const TypeProgrammer = () => {
 
             if (response.ok) {
                 if (status_id === 1) {
-                    navigate('/chat/web');
+                    navigate('/select-user-project-web');
                 } else if (status_id === 2) {
-                    navigate('/chat/mobile');
+                    navigate('/select-user-project');
                 }
             } else {
                 const errorData = await response.json();

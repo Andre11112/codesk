@@ -16,6 +16,9 @@ import ProjectDetailsMovil from './components/ProjectDetailsMovil';
 import ProjectDetailsWeb from './components/ProjectDetailsWeb';
 import Payment from './components/Payment';
 import SelectUserProject from './components/SelectUserProject';
+import SelectUserProjectWeb from './components/SelectUserProjectWeb';
+import UserPerfil from './components/UserPerfil';
+import imagen1 from './assets/images/1.png';
 
 function AppContent() {
     const location = useLocation();
@@ -44,16 +47,19 @@ function AppContent() {
         <div className={`App ${darkMode ? 'dark-mode' : ''}`}>
             <div className="content-wrapper">
                 {!hideHeaderRoutes.includes(location.pathname) && (
-                    <header>
-                        <div className="logo" onClick={toggleDarkMode}>Codesk</div>
-                        <nav>
-                            <Link to="/">Inicio</Link>
-                            <Link to="/#servicios">Servicios</Link>
-                            <Link to="/#sobre-nosotros">Sobre Nosotros</Link>
-                            <Link to="/#contacto">Contacto</Link>
-                            <Link to="/register">Registro</Link>
-                            <Link to="/login">Iniciar Sesión</Link>
-                        </nav>
+                    <header className={`bg-white shadow-md sticky top-0 z-10 w-3/4 rounded-3xl mx-auto ${darkMode ? 'dark-mode' : ''}`}>
+                        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">  
+                            <img src={imagen1} className="logo-image" onClick={toggleDarkMode} style={{cursor: 'pointer'}} alt="Logo" />
+                            <nav className={`space-x-8 font-semibold ${darkMode ? 'text-white' : 'text-black'}`}>
+                                <a href="/" className={`hover:${darkMode ? 'text-gray-300' : 'text-gray-900'}`}>Inicio</a>
+                                <a href="/Conocenos" className={`hover:${darkMode ? 'text-white-300' : 'text-gray-900'}`}>Conocenos</a>
+                                <a href="#" className={`hover:${darkMode ? 'text-gray-300' : 'text-gray-900'}`}>Trabajos</a>
+                                <a href="#" className={`hover:${darkMode ? 'text-gray-300' : 'text-gray-900'}`}>Contactanos</a>
+                            </nav>
+                            <div className="flex items-center space-x-4">
+                                <div className="w-10 h-10 rounded-full bg-gray-300"></div>
+                            </div>
+                        </div>
                     </header>
                 )}
 
@@ -66,7 +72,7 @@ function AppContent() {
                         <Route path="/chat/mobile" element={<MobileChat darkMode={darkMode} />} />
                         <Route path="/chat/web" element={<WebChat darkMode={darkMode} />} />
                         <Route path="/typeprogrammer" element={<TypeProgrammer />} />
-                        <Route path="/conocenos" element={<Conocenos />} />
+                        <Route path="/Conocenos" element={<Conocenos />} />
                         <Route path="/chat/user/web" element={<WebChatUser darkMode={darkMode} />} />
                         <Route path="/chat/user/mobile" element={<MobileChatUser darkMode={darkMode} />} />
                         <Route path="/chat/programmer/web" element={<WebChat darkMode={darkMode} />} />
@@ -75,6 +81,9 @@ function AppContent() {
                         <Route path="/project-details-web" element={<ProjectDetailsWeb projectType="web" />} />
                         <Route path="/payment" element={<Payment />} />
                         <Route path="/select-user-project" element={<SelectUserProject />} />
+                        <Route path="/select-user-project-web" element={<SelectUserProjectWeb />} />
+                        <Route path="/selectproject" element={<SelectProject />} />
+                        <Route path="/user-perfil" element={<UserPerfil darkMode={darkMode} />} />
                     </Routes>
                 </main>
             </div>

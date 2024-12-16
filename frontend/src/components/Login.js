@@ -47,7 +47,24 @@ function Login() {
         } else {
           localStorage.setItem('userId', data.user.id);
           console.log('userId guardado:', data.user.id);
-          navigate('/select-project');
+          
+          // Verificar si el usuario tiene un plan
+          const planCheckResponse = await fetch(`http://localhost:5000/api/users/check-user-plan/${data.user.id}`, {
+            headers: {
+              'Authorization': `Bearer ${data.token}`
+            }
+          });
+
+          if (planCheckResponse.ok) {
+            const planData = await planCheckResponse.json();
+            if (planData.hasPlan) {
+              navigate('/user-perfil');
+            } else {
+              navigate('/select-project');
+            }
+          } else {
+            navigate('/select-project'); // Por defecto, si hay error en la verificación
+          }
         }
       } else {
         alert(`Error al iniciar sesión: ${data.error}`);
